@@ -20,24 +20,15 @@ public class HibernateUtil {
     protected static final Configuration cfg = new Configuration();
     protected static ServiceRegistry sr;
     protected static SessionFactory sf;
-    public static Session session = getSession();
 
-    private static Session getSession() {
-        if (session == null) {
-            cfg.configure();
-            sr = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
-            sf = cfg.buildSessionFactory(sr);
-            session = sf.openSession();
-        }
-        return session;
-    }
-
-    public static void close() {
-        sf.close();
+    public static Session getSession() {
+        cfg.configure();
+        sr = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
+        sf = cfg.buildSessionFactory(sr);
+        return sf.openSession();
     }
 
     public static void main(String[] args) {
-        System.out.println(HibernateUtil.session);
-        HibernateUtil.close();
+        System.out.println(HibernateUtil.getSession());
     }
 }

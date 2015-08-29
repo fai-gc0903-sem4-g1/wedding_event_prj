@@ -24,7 +24,7 @@ public class InviteAddFriend implements Serializable {
     @GenericGenerator(name="id", strategy="uuid")
     @GeneratedValue(generator="id")
     private String inviteAddFriendStackId;
-    private String accountId; //foreign key account table
+    private String accountId;//foreign key account table
     private String personId;
     private Timestamp timeInviteAddFriend;
 
