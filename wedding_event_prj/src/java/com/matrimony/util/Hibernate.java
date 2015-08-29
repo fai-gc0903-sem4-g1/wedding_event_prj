@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wedding.event.database.process;
+package com.matrimony.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,6 +38,6 @@ public class Hibernate {
 
     public static void main(String[] args) {
         System.out.println(Hibernate.session);
-        close();
+        Hibernate.close();
     }
 }

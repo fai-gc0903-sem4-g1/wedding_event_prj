@@ -14,7 +14,7 @@
 		<property name="show_sql">true</property>
 		<property name="hbm2ddl.auto">create</property>
 		
-<!--		<mapping class="lab.entity.Department" />
-		<mapping class="lab.entity.Employee" />-->
+		<mapping class="com.matrimony.entity.Account" />
+		<mapping class="com.matrimony.entity.UserProfile" />
 	</session-factory>
 </hibernate-configuration>
