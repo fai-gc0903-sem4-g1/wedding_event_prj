@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.matrimony.event.entity;
+package com.matrimony.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -31,20 +32,77 @@ public class Account implements Serializable {
     private String passwordHash;
     private String email;
     private Timestamp lastTimeLogin;
+    private Timestamp registrationTime;
+    private Timestamp lastTimeChangePassword;
     private String lastIPLogin;
     private boolean activated;
-    @OneToOne(mappedBy = "accountId")
-    private Set<UserProfile> userProfile;
+    private String role;
+    @OneToMany(mappedBy = "accountId")
+    private Set<UserProfile> userProfiles;
+    @OneToMany(mappedBy = "accountId")
+    private Set<UserHobby> userHobbys;
+    @OneToMany(mappedBy = "accountId")
+    private Set<UserFriend> userFriends;
+    @OneToMany(mappedBy = "accountId")
+    private Set<InviteAddFriend> inviteAddFriends;
 
-    public Set<UserProfile> getUserProfile() {
-        return userProfile;
+    public Set<InviteAddFriend> getInviteAddFriends() {
+        return inviteAddFriends;
     }
 
-    public void setUserProfile(Set<UserProfile> userProfile) {
-        this.userProfile = userProfile;
+    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
+        this.inviteAddFriends = inviteAddFriends;
     }
 
     
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
+    public Timestamp getLastTimeChangePassword() {
+        return lastTimeChangePassword;
+    }
+
+    public Set<UserFriend> getUserFriends() {
+        return userFriends;
+    }
+
+    public void setUserFriends(Set<UserFriend> userFriends) {
+        this.userFriends = userFriends;
+    }
+
+    public void setLastTimeChangePassword(Timestamp lastTimeChangePassword) {
+        this.lastTimeChangePassword = lastTimeChangePassword;
+    }
+
+    public Set<UserProfile> getUserProfiles() {
+        return userProfiles;
+    }
+
+    public Timestamp getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(Timestamp registrationTime) {
+        this.registrationTime = registrationTime;
+    }
+
+    public void setUserProfiles(Set<UserProfile> userProfiles) {
+        this.userProfiles = userProfiles;
+    }
+
+    public Set<UserHobby> getUserHobbys() {
+        return userHobbys;
+    }
+
+    public void setUserHobbys(Set<UserHobby> userHobbys) {
+        this.userHobbys = userHobbys;
+    }
 
     public String getAccountId() {
         return accountId;

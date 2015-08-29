@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.matrimony.event.entity;
+package com.matrimony.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author SON
  */
 @Entity(name = "user_profile")
-public class UserProfile {
+public class UserProfile implements Serializable {
     @Id
     @Column(nullable = false)
     @GenericGenerator(name="id", strategy="uuid")
@@ -39,7 +41,25 @@ public class UserProfile {
     private String contactNumber;
     private String religion;
     private String caste;
+    private String introduction;
+    private Timestamp lastUpdateProfile;
 
+    public Timestamp getLastUpdateProfile() {
+        return lastUpdateProfile;
+    }
+
+    public void setLastUpdateProfile(Timestamp lastUpdateProfile) {
+        this.lastUpdateProfile = lastUpdateProfile;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+    
     public String getUserProfileId() {
         return userProfileId;
     }

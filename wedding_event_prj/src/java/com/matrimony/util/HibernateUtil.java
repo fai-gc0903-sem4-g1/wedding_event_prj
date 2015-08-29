@@ -15,7 +15,7 @@ import org.hibernate.service.ServiceRegistry;
  *
  * @author SON
  */
-public class Hibernate {
+public class HibernateUtil {
 
     protected static final Configuration cfg = new Configuration();
     protected static ServiceRegistry sr;
@@ -37,7 +37,7 @@ public class Hibernate {
     }
 
     public static void main(String[] args) {
-        System.out.println(Hibernate.session);
-        Hibernate.close();
+        System.out.println(HibernateUtil.session);
+        HibernateUtil.close();
     }
 }
