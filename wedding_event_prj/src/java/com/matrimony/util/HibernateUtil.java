@@ -17,15 +17,15 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
 
-    protected static final Configuration cfg = new Configuration();
-    protected static ServiceRegistry sr;
-    protected static SessionFactory sf;
-
+//    protected static ServiceRegistry sr;
+//    protected static SessionFactory sf;
     public static Session getSession() {
+        Configuration cfg = new Configuration();
         cfg.configure();
-        sr = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
-        sf = cfg.buildSessionFactory(sr);
-        return sf.openSession();
+        ServiceRegistry sr = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
+        SessionFactory sf = cfg.buildSessionFactory(sr);
+        Session ss = sf.openSession();
+        return ss;
     }
 
     public static void main(String[] args) {

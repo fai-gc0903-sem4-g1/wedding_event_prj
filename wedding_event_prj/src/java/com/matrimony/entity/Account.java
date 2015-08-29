@@ -42,54 +42,11 @@ public class Account implements Serializable {
     private Set<UserHobby> userHobbys;
     @OneToMany(mappedBy = "accountId")
     private Set<UserFriend> userFriends;
-    //@OneToMany(mappedBy = "accountId")
-    //private Set<InviteAddFriend> inviteAddFriends;
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    
-//    public Set<InviteAddFriend> getInviteAddFriends() {
-//        return inviteAddFriends;
-//    }
-    
-//
-//    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
-//        this.inviteAddFriends = inviteAddFriends;
-//    }
-    
-    
-    public Timestamp getLastTimeChangePassword() {
-        return lastTimeChangePassword;
-    }
-
-    public Set<UserFriend> getUserFriends() {
-        return userFriends;
-    }
-
-    public void setUserFriends(Set<UserFriend> userFriends) {
-        this.userFriends = userFriends;
-    }
-
-    public void setLastTimeChangePassword(Timestamp lastTimeChangePassword) {
-        this.lastTimeChangePassword = lastTimeChangePassword;
-    }
+    @OneToMany(mappedBy = "accountId")
+    private Set<InviteAddFriend> inviteAddFriends;
 
     public Set<UserProfile> getUserProfiles() {
         return userProfiles;
-    }
-
-    public Timestamp getRegistrationTime() {
-        return registrationTime;
-    }
-
-    public void setRegistrationTime(Timestamp registrationTime) {
-        this.registrationTime = registrationTime;
     }
 
     public void setUserProfiles(Set<UserProfile> userProfiles) {
@@ -102,6 +59,48 @@ public class Account implements Serializable {
 
     public void setUserHobbys(Set<UserHobby> userHobbys) {
         this.userHobbys = userHobbys;
+    }
+
+    public Set<UserFriend> getUserFriends() {
+        return userFriends;
+    }
+
+    public void setUserFriends(Set<UserFriend> userFriends) {
+        this.userFriends = userFriends;
+    }
+
+    public Set<InviteAddFriend> getInviteAddFriends() {
+        return inviteAddFriends;
+    }
+
+    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
+        this.inviteAddFriends = inviteAddFriends;
+    }
+
+    
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+    
+    public Timestamp getLastTimeChangePassword() {
+        return lastTimeChangePassword;
+    }
+
+    public void setLastTimeChangePassword(Timestamp lastTimeChangePassword) {
+        this.lastTimeChangePassword = lastTimeChangePassword;
+    }
+
+
+    public Timestamp getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(Timestamp registrationTime) {
+        this.registrationTime = registrationTime;
     }
 
     public String getAccountId() {
