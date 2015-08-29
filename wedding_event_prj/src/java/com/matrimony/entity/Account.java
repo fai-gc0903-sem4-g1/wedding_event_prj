@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -36,32 +35,33 @@ public class Account implements Serializable {
     private Timestamp lastTimeChangePassword;
     private String lastIPLogin;
     private boolean activated;
-    private String role;
+    private String roleName;
     @OneToMany(mappedBy = "accountId")
     private Set<UserProfile> userProfiles;
     @OneToMany(mappedBy = "accountId")
     private Set<UserHobby> userHobbys;
     @OneToMany(mappedBy = "accountId")
     private Set<UserFriend> userFriends;
-    @OneToMany(mappedBy = "accountId")
-    private Set<InviteAddFriend> inviteAddFriends;
+    //@OneToMany(mappedBy = "accountId")
+    //private Set<InviteAddFriend> inviteAddFriends;
 
-    public Set<InviteAddFriend> getInviteAddFriends() {
-        return inviteAddFriends;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
-        this.inviteAddFriends = inviteAddFriends;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public Set<InviteAddFriend> getInviteAddFriends() {
+//        return inviteAddFriends;
+//    }
+    
+//
+//    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
+//        this.inviteAddFriends = inviteAddFriends;
+//    }
     
     
     public Timestamp getLastTimeChangePassword() {
