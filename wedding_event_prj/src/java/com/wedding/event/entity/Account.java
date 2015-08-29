@@ -9,6 +9,6 @@ package com.wedding.event.entity;
  *
  * @author SON
  */
-public class NewClass {
+public class Account {
     
 }
