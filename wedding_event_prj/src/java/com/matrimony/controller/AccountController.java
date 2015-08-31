@@ -33,7 +33,7 @@ public class AccountController {
         return "register";
     }
     
-    @RequestMapping(value="qlogin", method = RequestMethod.GET)
+    @RequestMapping(value="qlogin", method = RequestMethod.POST)
     public String qlogin(HttpServletRequest request, Account account){
         if(!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())){
             try {
@@ -50,7 +50,7 @@ public class AccountController {
         return "login";
     }
     
-    @RequestMapping(value="qregister", method = RequestMethod.GET)
+    @RequestMapping(value="qregister", method = RequestMethod.POST)
     public String qregister(Account account, UserProfile userProfile){
         return "register";
     }
