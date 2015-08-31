@@ -38,16 +38,17 @@ public class AccountController {
         if(!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())){
             try {
                 AccountDAO.login(account.getUsername(), null);
+                request.setAttribute("notice", "Đăng nhập thành công");
             } catch (STException.UsernameNotExist ex) {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("alert", "Tài khoản không tồn tại");
+                request.setAttribute("notice", "Tài khoản không tồn tại");
             } catch (STException.WrongPassword ex) {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("alert", "Sai password");
+                request.setAttribute("notice", "Sai password");
             }
             return "failed";
         }
-        return "login";
+        return "success";
     }
     
     @RequestMapping(value="qregister", method = RequestMethod.POST)
