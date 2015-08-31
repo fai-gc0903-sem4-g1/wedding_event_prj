@@ -6,8 +6,12 @@
 package com.matrimony.database;
 
 import com.matrimony.entity.Account;
+import com.matrimony.exception.STException;
+import com.matrimony.security.HashUtil;
 import com.matrimony.util.HibernateUtil;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -38,19 +42,33 @@ public class AccountDAO {
         return account;
     }
     
+        public static Account findByUsername(String username){
+        Session ss=HibernateUtil.getSession();
+        Account account=(Account) ss.createQuery("FROM account where username=?").setString(0, username).uniqueResult();
+        ss.close();
+        return account;
+    }
+    
     public static boolean Update(Account account){
         return false;
     }
     
-    public static Account login(String username, String password){
-        Session ss=HibernateUtil.getSession();
-        Query q=ss.createQuery("FROM account WHERE username=? and passwordHash=?");
-        q.setString(0, username);
-        q.setString(1, password);
-        return (Account) q.uniqueResult();
+    public static Account login(String username, String password) throws STException.UsernameNotExist, STException.WrongPassword{
+        Account account=findByUsername(username);
+        if(account==null)throw new STException.UsernameNotExist("username not exists");
+        String passwordTemp=HashUtil.hashPassword(password, account.getSalt());
+        if(account.getPasswordHash().equals(passwordTemp)){
+            return account;
+        }else throw new STException.WrongPassword("Wrong password");
     }
     
     public static void main(String[] args) {
-        System.out.println(login("taothichthe", "duockhong"));
+        try {
+            System.out.println(login("taothichthe", "duockhong"));
+        } catch (STException.UsernameNotExist ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (STException.WrongPassword ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

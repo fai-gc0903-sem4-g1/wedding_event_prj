@@ -29,6 +29,7 @@ public class Account implements Serializable {
     private String accountId;
     private String username;
     private String passwordHash;
+    private String salt;
     private String email;
     private Timestamp lastTimeLogin;
     private Timestamp registrationTime;
@@ -59,6 +60,14 @@ public class Account implements Serializable {
 
     public void setUserHobbys(Set<UserHobby> userHobbys) {
         this.userHobbys = userHobbys;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public Set<UserFriend> getUserFriends() {
