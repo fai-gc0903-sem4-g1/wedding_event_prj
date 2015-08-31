@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="jstl-lib"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,5 +17,6 @@
         <a href="/wedding_event_prj/account/login">Login</a><br/>
         <a href="/wedding_event_prj/account/login">Register</a><br/>
         <a href="/wedding_event_prj/account/login">Login</a><br/>
+        ${empty sessionScope.abc}
     </body>
 </html>
