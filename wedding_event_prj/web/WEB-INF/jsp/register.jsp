@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-          <form action="/wedding_event_prj/account/qlogin" method="POST">
+          <form action="../account/qlogin" method="POST">
             <label>First Name</label>
             <input type="text" name="firstName"/><br/>
             <label>Middle Name</label>

@@ -16,7 +16,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form action="/wedding_event_prj/account/qlogin" method="POST">
+        <form action="../account/qlogin" method="POST">
             <label>username</label>
             <input type="text" name="username"/><br/>
             <label>password</label>
