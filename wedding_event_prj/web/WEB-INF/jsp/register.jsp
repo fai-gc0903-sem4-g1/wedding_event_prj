@@ -45,8 +45,6 @@
             <input type="text" name="caste"/></br> 
             <label>Introduction</label>
             <input type="text" name="introduction"/></br>
-           
-            
             <input type="submit" value="Login"/>
          </form>
     </body>

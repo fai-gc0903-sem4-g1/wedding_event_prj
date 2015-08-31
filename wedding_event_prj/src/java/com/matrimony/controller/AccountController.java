@@ -39,6 +39,7 @@ public class AccountController {
             try {
                 AccountDAO.login(account.getUsername(), null);
                 request.setAttribute("notice", "Đăng nhập thành công");
+                return "success";
             } catch (STException.UsernameNotExist ex) {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("notice", "Tài khoản không tồn tại");
@@ -48,11 +49,12 @@ public class AccountController {
             }
             return "failed";
         }
-        return "success";
+        return "404";
     }
     
     @RequestMapping(value="qregister", method = RequestMethod.POST)
     public String qregister(Account account, UserProfile userProfile){
-        return "register";
+        
+        return "";
     }
 }
