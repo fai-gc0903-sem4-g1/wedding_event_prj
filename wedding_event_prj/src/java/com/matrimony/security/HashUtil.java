@@ -10,7 +10,13 @@ package com.matrimony.security;
  * @author SON
  */
 public class HashUtil {
-    public String hashPassword(String password){
+    public static String hashPassword(String password){
         return "";
+    }
+    
+    public static void main(String[] args) {
+        String passowrd="1234";
+        String hashed=HashUtil.hashPassword(passowrd);
+        System.out.println(hashed);
     }
 }
