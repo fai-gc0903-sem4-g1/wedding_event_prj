@@ -15,7 +15,7 @@
     <body>
         <h1>It work!</h1>
         <a href="/wedding_event_prj/account/login">Login</a><br/>
-        <a href="/wedding_event_prj/account/login">Register</a><br/>
+        <a href="/wedding_event_prj/account/register">Register</a><br/>
         <a href="/wedding_event_prj/account/login">Login</a><br/>
         ${empty sessionScope.abc}
     </body>
