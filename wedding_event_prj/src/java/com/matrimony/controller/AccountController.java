@@ -10,6 +10,7 @@ import com.matrimony.database.UserProfileDAO;
 import com.matrimony.entity.Account;
 import com.matrimony.entity.UserProfile;
 import com.matrimony.exception.STException;
+import com.matrimony.util.MailUtil;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -25,22 +26,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author SON
  */
 @Controller
-@RequestMapping(value="account")
+@RequestMapping(value = "account")
 public class AccountController {
-    @RequestMapping(value="login", method = RequestMethod.GET)
-    public String login(){
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login() {
         return "login";
     }
-    
-    @RequestMapping(value="register", method = RequestMethod.GET)
-    public String register(){
+
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String register() {
         return "register";
     }
-    
-    @RequestMapping(value="qlogin", method = RequestMethod.POST)
-    public String qlogin(HttpServletRequest request, Account account){
+
+    @RequestMapping(value = "qlogin", method = RequestMethod.POST)
+    public String qlogin(HttpServletRequest request, Account account) {
         System.out.println(account);
-        if(!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())){
+        if (!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())) {
             try {
                 AccountDAO.login(account.getUsername(), account.getPasswordHash());
                 request.setAttribute("notice", "Đăng nhập thành công");
@@ -56,22 +58,29 @@ public class AccountController {
         }
         return "404";
     }
-    
-    @RequestMapping(value="qregister", method = RequestMethod.POST)
-    public String qregister(HttpServletRequest request,Account account, String day, String month, String year){
+
+    @RequestMapping(value = "qregister", method = RequestMethod.POST)
+    public String qregister(HttpServletRequest request, Account account, String day, String month, String year) {
         System.out.println(account);
         account.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         account.setRegistrationIP(request.getRemoteAddr());
-        String activeKey=UUID.randomUUID().toString().toUpperCase();
+        String activeKey = UUID.randomUUID().toString().toUpperCase(); //Generate key active
         account.setActiveKey(activeKey);
         try {
             AccountDAO.add(account);
-            Account a=AccountDAO.findByUsername(account.getUsername());
-            Date birthday=Date.valueOf(year+"-"+month+"-"+day);
-            UserProfile userProfile=new UserProfile();
+            Account a = AccountDAO.findByUsername(account.getUsername());
+            Date birthday = Date.valueOf(year + "-" + month + "-" + day);
+            UserProfile userProfile = new UserProfile();
             userProfile.setAccountId(a.getAccountId());
             userProfile.setBirthday(birthday);
             UserProfileDAO.add(userProfile);
+            /*=====Send mail to active=====*/
+            String subject="Cái mai này là mail active, không phải là spam đâu!!!";
+            StringBuilder content=new StringBuilder();
+            content.append("Đây là key active: ");
+            content.append(activeKey);
+            MailUtil mailUtil=new MailUtil(account.getEmail(), subject, month);
+            mailUtil.send();
         } catch (STException.UsernameAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "UsernameAlready");
@@ -82,6 +91,6 @@ public class AccountController {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "ContactNumberAlready");
         }
-        return "success";
+        return "activeAccount";
     }
 }

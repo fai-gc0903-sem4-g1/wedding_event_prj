@@ -58,7 +58,7 @@ public class MailUtil implements Runnable {
 
     }
     
-    public void send(String email) {
+    public void send() {
         this.run();
     }
 
