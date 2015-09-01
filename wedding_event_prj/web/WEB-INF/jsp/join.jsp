@@ -98,15 +98,15 @@
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-3">
-                            <input id="firstName" class="form-control" type="text" name="fullName" value=""
+                            <input id="firstName" class="form-control" type="text" name="firstName" value=""
                                    placeholder="First"></input>
                         </div>
                         <div class="col-sm-3">
-                            <input id="firstName" class="form-control" type="text" name="fullName" value=""
+                            <input id="middleName" class="form-control" type="text" name="middleName" value=""
                                    placeholder="Middle"></input>
                         </div>
                         <div class="col-sm-3">
-                            <input id="firstName" class="form-control" type="text" name="fullName" value=""
+                            <input id="lastName" class="form-control" type="text" name="lastName" value=""
                                    placeholder="Last"></input>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-9">
-                            <input id="password" class="form-control" type="password" name="password" placeholder="Mật khẩu"></input>
+                            <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
                         </div>
                     </div>
 
@@ -155,7 +155,7 @@
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1"></label>
                         <div class="col-sm-9">
-                            <input id="phoneNumber" class="form-control" type="text" name="phoneNumber"
+                            <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
                                    placeholder="Phone number"></input>
                         </div>
                     </div>
@@ -184,11 +184,11 @@
                         <div style="font-size: 17px;" class="checkbox" id="sexGroup">
                             <label style="color: red;" class="control-label col-sm-1"></label>
                             <label class="control-label">
-                                <input type="radio" id="sex" name="sex" value="female" />
+                                <input type="radio" id="sex" name="gender" value="female" />
                                 Nữ
                             </label>
                             <label class="control-label">
-                                <input id="sex" type="radio" name="sex" value="male" />
+                                <input id="sex" type="radio" name="gender" value="male" />
                                 Nam
                             </label>
                         </div>

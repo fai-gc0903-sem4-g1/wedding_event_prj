@@ -21,7 +21,6 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity(name = "account")
 public class Account implements Serializable {
-
     @Id
     @Column(nullable = false)
     @GenericGenerator(name = "id", strategy = "uuid")
