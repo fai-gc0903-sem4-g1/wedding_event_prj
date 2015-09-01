@@ -54,7 +54,8 @@ public class AccountController {
     
     @RequestMapping(value="qregister", method = RequestMethod.POST)
     public String qregister(Account account, UserProfile userProfile){
-        
-        return "";
+        System.out.println(account);
+        System.out.println(userProfile);
+        return "son";
     }
 }

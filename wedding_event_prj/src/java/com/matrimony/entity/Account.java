@@ -119,6 +119,11 @@ public class Account implements Serializable {
         this.accountId = accountId;
     }
 
+    @Override
+    public String toString() {
+        return "Account{" + "accountId=" + accountId + ", username=" + username + ", passwordHash=" + passwordHash + ", salt=" + salt + ", email=" + email + ", lastTimeLogin=" + lastTimeLogin + ", registrationTime=" + registrationTime + ", lastTimeChangePassword=" + lastTimeChangePassword + ", lastIPLogin=" + lastIPLogin + ", activated=" + activated + ", roleName=" + roleName + ", userProfiles=" + userProfiles + ", userHobbys=" + userHobbys + ", userFriends=" + userFriends + ", inviteAddFriends=" + inviteAddFriends + '}';
+    }
+
     public String getUsername() {
         return username;
     }
