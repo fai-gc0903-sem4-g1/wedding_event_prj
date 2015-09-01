@@ -180,5 +180,5 @@ public class Account implements Serializable {
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
-
+    
 }

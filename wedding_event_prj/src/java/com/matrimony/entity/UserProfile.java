@@ -47,6 +47,11 @@ public class UserProfile implements Serializable {
         return lastUpdateProfile;
     }
 
+    @Override
+    public String toString() {
+        return "UserProfile{" + "userProfileId=" + userProfileId + ", accountId=" + accountId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", birthday=" + birthday + ", maritalStatus=" + maritalStatus + ", height=" + height + ", weight=" + weight + ", country=" + country + ", city=" + city + ", countryLiveIn=" + countryLiveIn + ", cityLiveIn=" + cityLiveIn + ", religion=" + religion + ", caste=" + caste + ", introduction=" + introduction + ", lastUpdateProfile=" + lastUpdateProfile + '}';
+    }
+
     public void setLastUpdateProfile(Timestamp lastUpdateProfile) {
         this.lastUpdateProfile = lastUpdateProfile;
     }

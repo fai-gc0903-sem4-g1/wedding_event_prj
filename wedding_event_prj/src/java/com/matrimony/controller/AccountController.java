@@ -6,6 +6,7 @@
 package com.matrimony.controller;
 
 import com.matrimony.database.AccountDAO;
+import com.matrimony.database.UserProfileDAO;
 import com.matrimony.entity.Account;
 import com.matrimony.entity.UserProfile;
 import com.matrimony.exception.STException;
@@ -35,9 +36,10 @@ public class AccountController {
     
     @RequestMapping(value="qlogin", method = RequestMethod.POST)
     public String qlogin(HttpServletRequest request, Account account){
+        System.out.println(account);
         if(!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())){
             try {
-                AccountDAO.login(account.getUsername(), null);
+                AccountDAO.login(account.getUsername(), account.getPasswordHash());
                 request.setAttribute("notice", "Đăng nhập thành công");
                 return "success";
             } catch (STException.UsernameNotExist ex) {
@@ -53,18 +55,20 @@ public class AccountController {
     }
     
     @RequestMapping(value="qregister", method = RequestMethod.POST)
-    public String qregister(Account account, UserProfile userProfile){
+    public String qregister(HttpServletRequest request,Account account){
         System.out.println(account);
-        System.out.println(userProfile);
         try {
             AccountDAO.add(account);
         } catch (STException.UsernameAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("notice", "UsernameAlready");
         } catch (STException.EmailAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("notice", "EmailAlready");
         } catch (STException.ContactNumberAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("notice", "ContactNumberAlready");
         }
-        return "son";
+        return "success";
     }
 }

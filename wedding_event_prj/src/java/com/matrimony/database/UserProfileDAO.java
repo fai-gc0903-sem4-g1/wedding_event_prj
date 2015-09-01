@@ -17,7 +17,7 @@ import org.hibernate.Session;
  */
 public class UserProfileDAO {
 
-    public static void add(Account a) {
+    public static void add(UserProfile a) {
         Session ss = HibernateUtil.getSession();
         ss.getTransaction().begin();
         ss.save(a);
@@ -40,5 +40,9 @@ public class UserProfileDAO {
     }
     public static boolean Update(Account account) {
         return false;
+    }
+    
+    public static void main(String[] args) {
+        
     }
 }
