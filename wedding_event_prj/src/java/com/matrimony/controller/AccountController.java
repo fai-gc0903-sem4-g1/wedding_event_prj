@@ -10,6 +10,9 @@ import com.matrimony.database.UserProfileDAO;
 import com.matrimony.entity.Account;
 import com.matrimony.entity.UserProfile;
 import com.matrimony.exception.STException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -55,10 +58,20 @@ public class AccountController {
     }
     
     @RequestMapping(value="qregister", method = RequestMethod.POST)
-    public String qregister(HttpServletRequest request,Account account){
+    public String qregister(HttpServletRequest request,Account account, String day, String month, String year){
         System.out.println(account);
+        account.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
+        account.setRegistrationIP(request.getRemoteAddr());
+        String activeKey=UUID.randomUUID().toString().toUpperCase();
+        account.setActiveKey(activeKey);
         try {
             AccountDAO.add(account);
+            Account a=AccountDAO.findByUsername(account.getUsername());
+            Date birthday=Date.valueOf(year+"-"+month+"-"+day);
+            UserProfile userProfile=new UserProfile();
+            userProfile.setAccountId(a.getAccountId());
+            userProfile.setBirthday(birthday);
+            UserProfileDAO.add(userProfile);
         } catch (STException.UsernameAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "UsernameAlready");

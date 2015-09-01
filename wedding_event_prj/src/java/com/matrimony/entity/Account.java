@@ -37,6 +37,8 @@ public class Account implements Serializable {
     private boolean activated;
     private String roleName;
     private String contactNumber;
+    private String registrationIP;
+    private String activeKey;
     @OneToMany(mappedBy = "accountId")
     private Set<UserProfile> userProfiles;
     @OneToMany(mappedBy = "accountId")
@@ -45,6 +47,22 @@ public class Account implements Serializable {
     private Set<UserFriend> userFriends;
     @OneToMany(mappedBy = "accountId")
     private Set<InviteAddFriend> inviteAddFriends;
+
+    public String getRegistrationIP() {
+        return registrationIP;
+    }
+
+    public String getActiveKey() {
+        return activeKey;
+    }
+
+    public void setActiveKey(String activeKey) {
+        this.activeKey = activeKey;
+    }
+
+    public void setRegistrationIP(String registrationIP) {
+        this.registrationIP = registrationIP;
+    }
 
     public Set<UserProfile> getUserProfiles() {
         return userProfiles;
