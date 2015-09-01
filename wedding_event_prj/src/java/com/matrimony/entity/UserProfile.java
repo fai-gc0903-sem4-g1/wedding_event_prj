@@ -38,7 +38,6 @@ public class UserProfile implements Serializable {
     private String city;
     private String countryLiveIn;
     private String cityLiveIn;
-    private String contactNumber;
     private String religion;
     private String caste;
     private String introduction;
@@ -50,11 +49,6 @@ public class UserProfile implements Serializable {
 
     public void setLastUpdateProfile(Timestamp lastUpdateProfile) {
         this.lastUpdateProfile = lastUpdateProfile;
-    }
-
-    @Override
-    public String toString() {
-        return "UserProfile{" + "userProfileId=" + userProfileId + ", accountId=" + accountId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", birthday=" + birthday + ", maritalStatus=" + maritalStatus + ", height=" + height + ", weight=" + weight + ", country=" + country + ", city=" + city + ", countryLiveIn=" + countryLiveIn + ", cityLiveIn=" + cityLiveIn + ", contactNumber=" + contactNumber + ", religion=" + religion + ", caste=" + caste + ", introduction=" + introduction + ", lastUpdateProfile=" + lastUpdateProfile + '}';
     }
 
     public String getIntroduction() {
@@ -175,14 +169,6 @@ public class UserProfile implements Serializable {
 
     public void setCityLiveIn(String cityLiveIn) {
         this.cityLiveIn = cityLiveIn;
-    }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
     }
 
     public String getReligion() {

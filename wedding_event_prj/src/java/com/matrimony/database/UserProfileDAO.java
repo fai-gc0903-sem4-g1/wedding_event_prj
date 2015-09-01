@@ -6,6 +6,7 @@
 package com.matrimony.database;
 
 import com.matrimony.entity.Account;
+import com.matrimony.entity.UserProfile;
 import com.matrimony.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ import org.hibernate.Session;
  * @author SON
  */
 public class UserProfileDAO {
+
     public static void add(Account a) {
         Session ss = HibernateUtil.getSession();
         ss.getTransaction().begin();
@@ -29,15 +31,14 @@ public class UserProfileDAO {
         ss.close();
         return accounts;
     }
-    
-    public static Account findById(String id){
-        Session ss=HibernateUtil.getSession();
-        Account account=(Account) ss.createQuery("FROM account where accountId=?").setString(0, id).uniqueResult();
+
+    public static Account findById(String id) {
+        Session ss = HibernateUtil.getSession();
+        Account account = (Account) ss.createQuery("FROM account where accountId=?").setString(0, id).uniqueResult();
         ss.close();
         return account;
     }
-    
-    public static boolean Update(Account account){
+    public static boolean Update(Account account) {
         return false;
     }
 }

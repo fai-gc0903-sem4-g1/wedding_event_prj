@@ -56,6 +56,15 @@ public class AccountController {
     public String qregister(Account account, UserProfile userProfile){
         System.out.println(account);
         System.out.println(userProfile);
+        try {
+            AccountDAO.add(account);
+        } catch (STException.UsernameAlready ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (STException.EmailAlready ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (STException.ContactNumberAlready ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "son";
     }
 }

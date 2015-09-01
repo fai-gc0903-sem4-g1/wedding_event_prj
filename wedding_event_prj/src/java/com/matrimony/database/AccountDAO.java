@@ -20,12 +20,21 @@ import org.hibernate.Session;
  * @author SON
  */
 public class AccountDAO {
-    public static void add(Account a) {
-        Session ss = HibernateUtil.getSession();
-        ss.getTransaction().begin();
-        ss.save(a);
-        ss.getTransaction().commit();
-        ss.close();
+
+    public static void add(Account a) throws STException.UsernameAlready, STException.EmailAlready, STException.ContactNumberAlready {
+        if (findByUsername(a.getUsername()) != null) {
+            throw new STException.UsernameAlready("username already");
+        } else if (findByEmail(a.getEmail()) != null) {
+            throw new STException.EmailAlready("email already");
+        } else if (findByContactNumber(a.getContactNumber())!=null) {
+            throw new STException.ContactNumberAlready("contact number already");
+        } else {
+            Session ss = HibernateUtil.getSession();
+            ss.getTransaction().begin();
+            ss.save(a);
+            ss.getTransaction().commit();
+            ss.close();
+        }
     }
 
     public static List<Account> allAccounts() {
@@ -34,34 +43,52 @@ public class AccountDAO {
         ss.close();
         return accounts;
     }
-    
-    public static Account findById(String id){
-        Session ss=HibernateUtil.getSession();
-        Account account=(Account) ss.createQuery("FROM account where accountId=?").setString(0, id).uniqueResult();
+
+    public static Account findById(String id) {
+        Session ss = HibernateUtil.getSession();
+        Account account = (Account) ss.createQuery("FROM account where accountId=?").setString(0, id).uniqueResult();
         ss.close();
         return account;
     }
-    
-        public static Account findByUsername(String username){
-        Session ss=HibernateUtil.getSession();
-        Account account=(Account) ss.createQuery("FROM account where username=?").setString(0, username).uniqueResult();
+
+    public static Account findByUsername(String username) {
+        Session ss = HibernateUtil.getSession();
+        Account account = (Account) ss.createQuery("FROM account where username=?").setString(0, username).uniqueResult();
         ss.close();
         return account;
     }
-    
-    public static boolean Update(Account account){
+
+    public static Account findByEmail(String username) {
+        Session ss = HibernateUtil.getSession();
+        Account account = (Account) ss.createQuery("FROM account where email=?").setString(0, username).uniqueResult();
+        ss.close();
+        return account;
+    }
+
+    public static Account findByContactNumber(String contactNumber) {
+        Session ss = HibernateUtil.getSession();
+        Account account = (Account) ss.createQuery("FROM account where contactNumber=?").setString(0, contactNumber).uniqueResult();
+        ss.close();
+        return account;
+    }
+
+    public static boolean Update(Account account) {
         return false;
     }
-    
-    public static Account login(String username, String password) throws STException.UsernameNotExist, STException.WrongPassword{
-        Account account=findByUsername(username);
-        if(account==null)throw new STException.UsernameNotExist("username not exists");
-        String passwordTemp=HashUtil.hashPassword(password, account.getSalt());
-        if(account.getPasswordHash().equals(passwordTemp)){
+
+    public static Account login(String username, String password) throws STException.UsernameNotExist, STException.WrongPassword {
+        Account account = findByUsername(username);
+        if (account == null) {
+            throw new STException.UsernameNotExist("username not exists");
+        }
+        String passwordTemp = HashUtil.hashPassword(password, account.getSalt());
+        if (account.getPasswordHash().equals(passwordTemp)) {
             return account;
-        }else throw new STException.WrongPassword("Wrong password");
+        } else {
+            throw new STException.WrongPassword("Wrong password");
+        }
     }
-    
+
     public static void main(String[] args) {
         try {
             System.out.println(login("taothichthe", "duockhong"));

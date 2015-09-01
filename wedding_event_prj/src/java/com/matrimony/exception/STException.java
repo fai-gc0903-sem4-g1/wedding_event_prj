@@ -24,4 +24,20 @@ public class STException {
             super(msg);
         }
     }
+    public static class EmailAlready extends Exception {
+
+        public EmailAlready(String msg) {
+            super(msg);
+        }
+    }
+    public static class ContactNumberAlready extends Exception {
+        public ContactNumberAlready(String msg) {
+            super(msg);
+        }
+    }
+     public static class UsernameAlready extends Exception {
+        public UsernameAlready(String msg) {
+            super(msg);
+        }
+    }
 }

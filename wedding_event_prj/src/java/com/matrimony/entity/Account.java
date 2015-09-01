@@ -36,6 +36,7 @@ public class Account implements Serializable {
     private String lastIPLogin;
     private boolean activated;
     private String roleName;
+    private String contactNumber;
     @OneToMany(mappedBy = "accountId")
     private Set<UserProfile> userProfiles;
     @OneToMany(mappedBy = "accountId")
@@ -47,6 +48,14 @@ public class Account implements Serializable {
 
     public Set<UserProfile> getUserProfiles() {
         return userProfiles;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public void setUserProfiles(Set<UserProfile> userProfiles) {

@@ -4,22 +4,14 @@
     Author     : SON
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../bundle/bootstrap.jsp"/>
 <jsp:include page="../bundle/jstl.jsp"/>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
         <title>Wellcome to Matrimony</title>
-        <meta name="generator" content="Bootply" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-        <!--[if lt IE 9]>
-                <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <link href="css/styles.css" rel="stylesheet">
     </head>
     <style>
         body{
@@ -92,7 +84,7 @@
 
                 <form id="registerForm" action="/wedding_event_prj/account/qregister" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
-                    <!--                    <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
+                                        <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
                     
                                         <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1">(*)</label>
@@ -129,15 +121,12 @@
                                             <div class="col-sm-9">
                                                 <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
                                             </div>
-                                        </div>
-                    
-                                        <div class="form-group">
+                                        </div>                                        <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1">(*)</label>
                                             <div class="col-sm-9">
                                                 <input id="rePass" class="form-control" type="password" placeholder="Nhập lại mật khẩu"></input>
                                             </div>
                                         </div>
-                    
                                         <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1">(*)</label>
                                             <div class="col-sm-9 has-feedback has-feedback-left">
@@ -151,28 +140,43 @@
                                             </div>
                                         </div>
                     
-                                        <div class="form-group">
+                                       <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1"></label>
                                             <div class="col-sm-9">
                                                 <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
                                                        placeholder="Phone number"></input>
                                             </div>
                                         </div>
-                    
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1"></label>
-                                            <div class="col-sm-9">
-                                                <label class="control-label">Ngày sinh</label>
-                                            </div>
-                                            <br/><br/>
-                    
+                                     <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-9">
-                                                <input id="birthday" class="form-control" type="date" min="1800-01-01" max="currentDate()"
-                                                       name="birthday" />
+                                            <div class="col-sm-3">
+                                                <select class="form-control" type="text" name="day">
+                                                    <option>Ngày</option>
+                                                    <c:forEach var="i" begin="1" end="31" step="1">
+                                                         <option>${i}</option>
+                                                    </c:forEach>
+                                                   
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3">
+                                               <select class="form-control" type="text" name="month">
+                                                    <option>Tháng</option>
+                                                    <c:forEach var="i" begin="1" end="12" step="1">
+                                                         <option>${i}</option>
+                                                    </c:forEach>
+                                                   
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3">
+                                               <select class="form-control" type="text" name="year">
+                                                    <option>Năm</option>
+                                                    <c:forEach var="i" begin="1905" end="2015" step="1">
+                                                         <option>${i}</option>
+                                                    </c:forEach>
+                                                   
+                                                </select>
                                             </div>
                                         </div>
-                    
                                         <div class="form-group">
                                             <label style="color: red;" class="control-label col-sm-1"></label>
                                             <div class="col-sm-3">
@@ -192,7 +196,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                    -->
+                    
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1"></label>
                         <div class="col-sm-4">
