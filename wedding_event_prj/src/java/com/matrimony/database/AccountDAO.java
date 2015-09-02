@@ -9,6 +9,7 @@ import com.matrimony.entity.Account;
 import com.matrimony.exception.STException;
 import com.matrimony.security.HashUtil;
 import com.matrimony.util.HibernateUtil;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,11 +75,14 @@ public class AccountDAO {
         return account;
     }
 
-    public static boolean Update(Account account) {
-        return false;
+    public static void Update(Account account) {
+       Session ss=HibernateUtil.getSession();
+       ss.getTransaction().begin();
+       ss.update(account);
+       ss.getTransaction().commit();
     }
 
-    public static Account login(String username, String password) throws STException.UsernameNotExist, STException.WrongPassword {
+    public static Account login(String username, String password, String ipAddr) throws STException.UsernameNotExist, STException.WrongPassword {
         Account account;
         if((account=findByUsername(username))==null){
             if((account=findByEmail(username))==null){
@@ -90,6 +94,9 @@ public class AccountDAO {
         }
         String passwordTemp = HashUtil.hashPassword(password, account.getSalt());
         if (account.getPasswordHash().equals(passwordTemp)) {
+            account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
+            account.setLastIPLogin(ipAddr);
+            AccountDAO.Update(account);
             return account;
         } else {
             throw new STException.WrongPassword("Wrong password");
@@ -97,7 +104,6 @@ public class AccountDAO {
     }
     
     public static void main(String[] args) {
-        try {
             //        Account a=new Account();
 //        a.setUsername("kunedo");
 //        a.setPasswordHash("1234");
@@ -111,12 +117,6 @@ public class AccountDAO {
 //        } catch (STException.ContactNumberAlready ex) {
 //            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-            login("kunedo", "1234");
-            System.out.println("OK");
-        } catch (STException.UsernameNotExist ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (STException.WrongPassword ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 }

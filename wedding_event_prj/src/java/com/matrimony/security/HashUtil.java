@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -57,10 +58,6 @@ public class HashUtil {
     }
 
     public static void main(String[] args) {
-        String passowrd = "1234";
-        String salt=HashUtil.generateSalt("1234");
-        String hashed = HashUtil.hashPassword(passowrd, salt);
-        System.out.println(salt+" "+salt.length());
-        System.out.println(hashed+" "+hashed.length());
+        generateSalt("1234");
     }
 }

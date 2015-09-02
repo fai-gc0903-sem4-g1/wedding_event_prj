@@ -44,9 +44,14 @@ public class AccountController {
         System.out.println(account);
         if (!"".equals(account.getUsername()) && !"".equals(account.getPasswordHash())) {
             try {
-                AccountDAO.login(account.getUsername(), account.getPasswordHash());
-                request.setAttribute("notice", "Đăng nhập thành công");
-                return "success";
+                Account a = AccountDAO.login(account.getUsername(), account.getPasswordHash(), request.getRemoteAddr());
+                if (a.isActivated()) {
+                    request.setAttribute("notice", "Đăng nhập thành công");
+                    return "success";
+                } else {
+                    return "activeAccount";
+                }
+
             } catch (STException.UsernameNotExist ex) {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("notice", "Tài khoản không tồn tại");
@@ -75,11 +80,11 @@ public class AccountController {
             userProfile.setBirthday(birthday);
             UserProfileDAO.add(userProfile);
             /*=====Send mail to active=====*/
-            String subject="Cái mai này là mail active, không phải là spam đâu!!!";
-            StringBuilder content=new StringBuilder();
+            String subject = "Cái mai này là mail active, không phải là spam đâu!!!";
+            StringBuilder content = new StringBuilder();
             content.append("Đây là key active: ");
             content.append(activeKey);
-            MailUtil mailUtil=new MailUtil(account.getEmail(), subject, month);
+            MailUtil mailUtil = new MailUtil(account.getEmail(), subject, month);
             mailUtil.send();
         } catch (STException.UsernameAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
