@@ -14,15 +14,12 @@
     </head>
     <body>
         <c:choose>
-            <c:when test="${empty sessionScope.currentUser}">
+            <c:when test="${empty sessionScope.currentAccount}">
                 <jsp:include page="join.jsp"/>
             </c:when>
-            <c:otherwise>
-                <h1>It work!</h1>
-                <a href="/wedding_event_prj/account/login">Login</a><br/>
-                <a href="/wedding_event_prj/account/register">Register</a><br/>
-                <a href="/wedding_event_prj/account/login">Login</a><br/>
-            </c:otherwise>
+            <c:when test="${sessionScope.currentAccount.activated==true}">
+               
+            </c:when>
         </c:choose>
 
 

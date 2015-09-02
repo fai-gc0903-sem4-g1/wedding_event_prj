@@ -19,9 +19,12 @@ public class HibernateUtil {
 
 //    protected static ServiceRegistry sr;
 //    protected static SessionFactory sf;
+    private static Configuration cfg;
     public static Session getSession() {
-        Configuration cfg = new Configuration();
-        cfg.configure();
+        if(cfg==null){
+            cfg = new Configuration();
+            cfg.configure();
+        }
         ServiceRegistry sr = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
         SessionFactory sf = cfg.buildSessionFactory(sr);
         Session ss = sf.openSession();
@@ -29,6 +32,6 @@ public class HibernateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(HibernateUtil.getSession());
+        HibernateUtil.getSession().getTransaction().commit();
     }
 }

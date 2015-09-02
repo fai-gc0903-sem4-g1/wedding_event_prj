@@ -9,11 +9,7 @@ import com.matrimony.entity.Account;
 import com.matrimony.exception.STException;
 import com.matrimony.security.HashUtil;
 import com.matrimony.util.HibernateUtil;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -27,7 +23,7 @@ public class AccountDAO {
             throw new STException.UsernameAlready("username already");
         } else if (findByEmail(a.getEmail()) != null) {
             throw new STException.EmailAlready("email already");
-        } else if (findByContactNumber(a.getContactNumber())!=null) {
+        } else if (findByContactNumber(a.getContactNumber()) != null) {
             throw new STException.ContactNumberAlready("contact number already");
         } else {
             a.setSalt(HashUtil.generateSalt(a.getUsername()));
@@ -37,6 +33,7 @@ public class AccountDAO {
             ss.save(a);
             ss.getTransaction().commit();
             ss.close();
+            System.out.println("Added account " + a.getUsername());
         }
     }
 
@@ -76,17 +73,18 @@ public class AccountDAO {
     }
 
     public static void Update(Account account) {
-       Session ss=HibernateUtil.getSession();
-       ss.getTransaction().begin();
-       ss.update(account);
-       ss.getTransaction().commit();
+        Session ss = HibernateUtil.getSession();
+        ss.getTransaction().begin();
+        ss.update(account);
+        ss.getTransaction().commit();
+        ss.close();
     }
 
-    public static Account login(String username, String password, String ipAddr) throws STException.UsernameNotExist, STException.WrongPassword {
+    public static Account login(String loginName, String password) throws STException.UsernameNotExist, STException.WrongPassword {
         Account account;
-        if((account=findByUsername(username))==null){
-            if((account=findByEmail(username))==null){
-                account=findByContactNumber(username);
+        if ((account = findByUsername(loginName)) == null) {
+            if ((account = findByEmail(loginName)) == null) {
+                account = findByContactNumber(loginName);
             }
         }
         if (account == null) {
@@ -94,29 +92,18 @@ public class AccountDAO {
         }
         String passwordTemp = HashUtil.hashPassword(password, account.getSalt());
         if (account.getPasswordHash().equals(passwordTemp)) {
-            account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
-            account.setLastIPLogin(ipAddr);
-            AccountDAO.Update(account);
             return account;
         } else {
             throw new STException.WrongPassword("Wrong password");
         }
     }
-    
+
     public static void main(String[] args) {
-            //        Account a=new Account();
-//        a.setUsername("kunedo");
-//        a.setPasswordHash("1234");
-//        try {
-//            System.out.println("Adding...");
-//            add(a);
-//        } catch (STException.UsernameAlready ex) {
-//            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (STException.EmailAlready ex) {
-//            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (STException.ContactNumberAlready ex) {
-//            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-       
+        Account account = findByUsername("kunedo");
+        System.out.println(account);
+        account.setActivated(true);
+        Update(account);
+        Account a = findByUsername("kunedo");
+        System.out.println(a);
     }
 }

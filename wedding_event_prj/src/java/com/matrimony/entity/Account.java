@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity(name = "account")
 public class Account implements Serializable {
+
     @Id
     @Column(nullable = false)
     @GenericGenerator(name = "id", strategy = "uuid")
@@ -30,22 +32,24 @@ public class Account implements Serializable {
     private String passwordHash;
     private String salt;
     private String email;
-    private Timestamp lastTimeLogin;
-    private Timestamp registrationTime;
-    private Timestamp lastTimeChangePassword;
-    private String lastIPLogin;
-    private boolean activated;
     private String roleName;
     private String contactNumber;
     private String registrationIP;
     private String activeKey;
-    @OneToMany(mappedBy = "accountId")
+    private Timestamp lastTimeLogin;
+    private Timestamp registrationTime;
+    private Timestamp lastTimeChangePassword;
+    private Timestamp activeTime;
+    private String lastIPLogin;
+    private boolean activated;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private Set<UserProfile> userProfiles;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private Set<UserHobby> userHobbys;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private Set<UserFriend> userFriends;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private Set<InviteAddFriend> inviteAddFriends;
 
     public String getRegistrationIP() {
@@ -62,6 +66,14 @@ public class Account implements Serializable {
 
     public void setRegistrationIP(String registrationIP) {
         this.registrationIP = registrationIP;
+    }
+
+    public Timestamp getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(Timestamp activeTime) {
+        this.activeTime = activeTime;
     }
 
     public Set<UserProfile> getUserProfiles() {
@@ -112,7 +124,6 @@ public class Account implements Serializable {
         this.inviteAddFriends = inviteAddFriends;
     }
 
-    
     public String getRoleName() {
         return roleName;
     }
@@ -120,7 +131,7 @@ public class Account implements Serializable {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-    
+
     public Timestamp getLastTimeChangePassword() {
         return lastTimeChangePassword;
     }
@@ -128,7 +139,6 @@ public class Account implements Serializable {
     public void setLastTimeChangePassword(Timestamp lastTimeChangePassword) {
         this.lastTimeChangePassword = lastTimeChangePassword;
     }
-
 
     public Timestamp getRegistrationTime() {
         return registrationTime;
@@ -198,5 +208,5 @@ public class Account implements Serializable {
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
-    
+
 }

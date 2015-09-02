@@ -23,6 +23,7 @@ public class UserProfileDAO {
         ss.save(a);
         ss.getTransaction().commit();
         ss.close();
+        System.out.println("Added user profile "+a.getAccountId());
     }
 
     public static List<Account> allAccounts() {
