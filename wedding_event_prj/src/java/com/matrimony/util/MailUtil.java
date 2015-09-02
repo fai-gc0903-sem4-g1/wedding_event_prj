@@ -30,23 +30,29 @@ public class MailUtil implements Runnable {
     private Properties props;
     private Authenticator auth;
     private Session session;
-    
-    
+
     private String content;
     private String subject;
     private String destinationEmail;
 
     public MailUtil(String destinationEmail, String subject, String content) {
-        this.destinationEmail=destinationEmail;
-        this.subject=subject;
-        this.content=content;
+        this.destinationEmail = destinationEmail;
+        this.subject = subject;
+        this.content = content;
         /* =====Create properties===== */
         props = new Properties();
-        props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", SMTP_SERVER);
         props.put("mail.smtp.port", PORT);
-
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        
+        /*====SSL configuration====*/
+//        props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.socketFactory.port", "465");
+//        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//        props.put("mail.smtp.host", "smtp.gmail.com");
+//        props.put("mail.smtp.port", "465");
         /* =====Authentication===== */
         auth = new Authenticator() {
             @Override
@@ -57,7 +63,7 @@ public class MailUtil implements Runnable {
         session = Session.getInstance(props, auth);
 
     }
-    
+
     public void send() {
         this.run();
     }
@@ -72,9 +78,15 @@ public class MailUtil implements Runnable {
             message.setSubject(this.subject);
             message.setText(this.content);
             Transport.send(message);
+            System.out.println("Sent to " + destinationEmail);
         } catch (MessagingException ex) {
             Logger.getLogger(MailUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println("Sending...");
+        MailUtil mailUtil = new MailUtil("sondcgc00681@fpt.edu.vn", "mail test working", "OK it worked");
+        mailUtil.send();
+    }
 }

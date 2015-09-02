@@ -86,16 +86,20 @@ public class AccountController {
             content.append(activeKey);
             MailUtil mailUtil = new MailUtil(account.getEmail(), subject, month);
             mailUtil.send();
+            return "activeAccount";
         } catch (STException.UsernameAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "UsernameAlready");
+            return "failed";
         } catch (STException.EmailAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "EmailAlready");
+            return "failed";
         } catch (STException.ContactNumberAlready ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("notice", "ContactNumberAlready");
+            return "failed";
         }
-        return "activeAccount";
+        
     }
 }
