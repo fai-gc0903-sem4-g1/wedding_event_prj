@@ -19,7 +19,6 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
-        
-        <a href="${account.username}">${userProfile.lastName} ${userProfile.middleName} ${userProfile.firstName}</a>
+        <a href="abc/${account.username}">${userProfile.lastName} ${userProfile.middleName} ${userProfile.firstName}</a>
     </body>
 </html>

@@ -120,9 +120,9 @@ public class AccountController {
         }
     }
     
-    @RequestMapping(value = "{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "{abc/{username}}", method = RequestMethod.GET)
     public String profile(String username) {
-        System.out.println(username);
+        System.out.println("Da nhan duoc roi");
         return "notyet";
     }
 

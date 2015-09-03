@@ -85,119 +85,119 @@
 
                 <form id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
-                                        <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
-                    
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-3">
-                                                <input id="firstName" class="form-control" type="text" name="firstName"
-                                                       placeholder="First"></input>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <input id="middleName" class="form-control" type="text" name="middleName"
-                                                       placeholder="Middle"></input>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <input id="lastName" class="form-control" type="text" name="lastName"
-                                                       placeholder="Last"></input>
-                                            </div>
-                                        </div>
-                    
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-9 has-feedback has-feedback-left">
-                                                <img style="display: none; padding: 6px 6px;" class="form-control-feedback"
-                                                     src="resources/img/loading.gif" id="userChecking"></img>
-                                                <i id="userOk" style="display: none; color: green;"
-                                                   class="form-control-feedback glyphicon glyphicon-ok"></i>
-                                                <i id="userAlready" style="display: none; color: red"
-                                                   class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
-                                                <input id="username" onkeyup="userChecker()" class="form-control" type="text" name="username"
-                                                       placeholder="Tên người dùng"></input>
-                                            </div>
-                                        </div>
-                    
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-9">
-                                                <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
-                                            </div>
-                                        </div>                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-9">
-                                                <input id="rePass" class="form-control" type="password" placeholder="Nhập lại mật khẩu"></input>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-9 has-feedback has-feedback-left">
-                                                <img style="display: none; padding: 6px 6px;" class="form-control-feedback"
-                                                     src="resources/img/loading.gif" id="emailChecking"></img>
-                                                <i id="emailOk" style="display: none; color: green;"
-                                                   class="form-control-feedback glyphicon glyphicon-ok"></i>
-                                                <i id="emailAlready" style="display: none; color: red;"
-                                                   class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
-                                                <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Email"></input>
-                                            </div>
-                                        </div>
-                    
-                                       <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1"></label>
-                                            <div class="col-sm-9">
-                                                <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
-                                                       placeholder="Phone number"></input>
-                                            </div>
-                                        </div>
-                                     <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control" type="text" name="day">
-                                                    <option>Ngày</option>
-                                                    <c:forEach var="i" begin="1" end="31" step="1">
-                                                         <option>${i}</option>
-                                                    </c:forEach>
-                                                   
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                               <select class="form-control" type="text" name="month">
-                                                    <option>Tháng</option>
-                                                    <c:forEach var="i" begin="1" end="12" step="1">
-                                                         <option>${i}</option>
-                                                    </c:forEach>
-                                                   
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3">
-                                               <select class="form-control" type="text" name="year">
-                                                    <option>Năm</option>
-                                                    <c:forEach var="i" begin="1905" end="2015" step="1">
-                                                         <option>${i}</option>
-                                                    </c:forEach>
-                                                   
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label style="color: red;" class="control-label col-sm-1"></label>
-                                            <div class="col-sm-3">
-                                                <label class="control-label">Giới tính</label>
-                                            </div>
-                                            <br/>
-                    
-                                            <div style="font-size: 17px;" class="checkbox" id="sexGroup">
-                                                <label style="color: red;" class="control-label col-sm-1"></label>
-                                                <label class="control-label">
-                                                    <input type="radio" id="sex" name="gender" value="female" />
-                                                    Nữ
-                                                </label>
-                                                <label class="control-label">
-                                                    <input id="sex" type="radio" name="gender" value="male" />
-                                                    Nam
-                                                </label>
-                                            </div>
-                                        </div>
-                    
+                    <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
+
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-3">
+                            <input id="firstName" class="form-control" type="text" name="firstName"
+                                   placeholder="First"></input>
+                        </div>
+                        <div class="col-sm-3">
+                            <input id="middleName" class="form-control" type="text" name="middleName"
+                                   placeholder="Middle"></input>
+                        </div>
+                        <div class="col-sm-3">
+                            <input id="lastName" class="form-control" type="text" name="lastName"
+                                   placeholder="Last"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-9 has-feedback has-feedback-left">
+                            <img style="display: none; padding: 6px 6px;" class="form-control-feedback"
+                                 src="resources/img/loading.gif" id="userChecking"></img>
+                            <i id="userOk" style="display: none; color: green;"
+                               class="form-control-feedback glyphicon glyphicon-ok"></i>
+                            <i id="userAlready" style="display: none; color: red"
+                               class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
+                            <input id="username" onkeyup="userChecker()" class="form-control" type="text" name="username"
+                                   placeholder="Tên người dùng"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-9">
+                            <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
+                        </div>
+                    </div>                                        <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-9">
+                            <input id="rePass" class="form-control" type="password" placeholder="Nhập lại mật khẩu"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-9 has-feedback has-feedback-left">
+                            <img style="display: none; padding: 6px 6px;" class="form-control-feedback"
+                                 src="resources/img/loading.gif" id="emailChecking"></img>
+                            <i id="emailOk" style="display: none; color: green;"
+                               class="form-control-feedback glyphicon glyphicon-ok"></i>
+                            <i id="emailAlready" style="display: none; color: red;"
+                               class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
+                            <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Email"></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1"></label>
+                        <div class="col-sm-9">
+                            <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
+                                   placeholder="Phone number"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" type="text" name="day">
+                                <option>Ngày</option>
+                                <c:forEach var="i" begin="1" end="31" step="1">
+                                    <option>${i}</option>
+                                </c:forEach>
+
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" type="text" name="month">
+                                <option>Tháng</option>
+                                <c:forEach var="i" begin="1" end="12" step="1">
+                                    <option>${i}</option>
+                                </c:forEach>
+
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" type="text" name="year">
+                                <option>Năm</option>
+                                <c:forEach var="i" begin="1905" end="2015" step="1">
+                                    <option>${i}</option>
+                                </c:forEach>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1"></label>
+                        <div class="col-sm-3">
+                            <label class="control-label">Giới tính</label>
+                        </div>
+                        <br/>
+
+                        <div style="font-size: 17px;" class="checkbox" id="sexGroup">
+                            <label style="color: red;" class="control-label col-sm-1"></label>
+                            <label class="control-label">
+                                <input type="radio" id="sex" name="gender" value="female" />
+                                Nữ
+                            </label>
+                            <label class="control-label">
+                                <input id="sex" type="radio" name="gender" value="male" />
+                                Nam
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1"></label>
                         <div class="col-sm-4">
