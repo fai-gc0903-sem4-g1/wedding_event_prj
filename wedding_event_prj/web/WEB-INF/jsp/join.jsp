@@ -47,7 +47,7 @@
         </div>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
-                <form id="loginForm" action="/wedding_event_prj/account/qlogin" method="POST"
+                <form id="loginForm" action="/wedding_event_prj/account/login" method="POST"
                       class="form-horizontal col-md-4">
                     <div class="form-group">
                         <!--<label class="col-sm-4 control-label">Tên đăng nhập</label>-->
@@ -82,7 +82,7 @@
                 </form>
 
 
-                <form id="registerForm" action="/wedding_event_prj/account/qregister" method="POST" class="form-horizontal col-md-4">
+                <form id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
                                         <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
                     

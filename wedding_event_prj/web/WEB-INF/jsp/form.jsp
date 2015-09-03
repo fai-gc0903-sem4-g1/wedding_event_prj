@@ -16,12 +16,12 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form action="../account/qlogin" method="POST">
-            <label>username</label>
-            <input type="text" name="username"/><br/>
-            <label>password</label>
-            <input type="password" name="passwordHash"/></br>           
-            <input type="submit" value="Login"/>
+        <form action="/wedding_event_prj/valid" method="POST">
+            <label>name</label>
+            <input type="text" name="name"/><br/>
+            <label>age</label>
+            <input type="number" name="age"/></br>           
+            <input type="submit" value="Valid"/>
          </form>
     </body>
 </html>

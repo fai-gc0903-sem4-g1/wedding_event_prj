@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login(HttpServletRequest request) {
+    public String showLogin(HttpServletRequest request) {
         System.out.println(request.getRemoteAddr());
         return "login";
     }
@@ -40,8 +40,8 @@ public class AccountController {
         return "register";
     }
 
-    @RequestMapping(value = "qlogin", method = RequestMethod.POST)
-    public String qlogin(HttpServletRequest request, Account accountLogin) {
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String qogin(HttpServletRequest request, Account accountLogin) {
         System.out.println(accountLogin);
         if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
             try {
@@ -68,8 +68,8 @@ public class AccountController {
         return "404";
     }
 
-    @RequestMapping(value = "qregister", method = RequestMethod.POST)
-    public String qregister(HttpServletRequest request, Account accountReg, String day, String month, String year) {
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String register(HttpServletRequest request, Account accountReg, String day, String month, String year) {
         System.out.println(accountReg);
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         accountReg.setRegistrationIP(request.getRemoteAddr());

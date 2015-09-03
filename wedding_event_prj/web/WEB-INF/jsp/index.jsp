@@ -18,11 +18,8 @@
                 <jsp:include page="join.jsp"/>
             </c:when>
             <c:when test="${sessionScope.currentAccount.activated==true}">
-               
+               <jsp:include page="home.jsp"/>
             </c:when>
         </c:choose>
-
-
-
     </body>
 </html>

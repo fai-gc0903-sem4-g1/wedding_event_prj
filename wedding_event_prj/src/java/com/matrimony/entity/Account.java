@@ -51,9 +51,29 @@ public class Account implements Serializable {
     private Set<UserFriend> userFriends;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
     private Set<InviteAddFriend> inviteAddFriends;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "senderId")
+    private Set<Friend> friends;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "receiverId")
+    private Set<Friend> receivers;
 
     public String getRegistrationIP() {
         return registrationIP;
+    }
+
+    public Set<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public Set<Friend> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(Set<Friend> receivers) {
+        this.receivers = receivers;
     }
 
     public String getActiveKey() {
