@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class HelloWolrdController {
-
+    public static void main(String[] args) {
+        
+    }
 //    @RequestMapping(value = "form", method = RequestMethod.GET)
 //    public String form() {
 //        return "form";
