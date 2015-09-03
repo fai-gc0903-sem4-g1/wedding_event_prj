@@ -5,13 +5,7 @@
  */
 package com.matrimony.controller;
 
-import com.matrimony.entity.Person;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -20,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HelloWolrdController {
 
-    @RequestMapping(value = "form", method = RequestMethod.GET)
-    public String form() {
-        return "form";
-    }
-
-    @RequestMapping(value = "valid", method = RequestMethod.POST)
-    public String valid(@Valid Person p, BindingResult bindingResult) {
-        System.out.println(p);
-        if (bindingResult.hasErrors()) {
-            return "failed";
-        }
-        return "redirect:OK";
-    }
+//    @RequestMapping(value = "form", method = RequestMethod.GET)
+//    public String form() {
+//        return "form";
+//    }
+//
+//    @RequestMapping(value = "valid", method = RequestMethod.POST)
+//    public String valid(@Valid Person p, BindingResult bindingResult) {
+//        System.out.println(p);
+//        if (bindingResult.hasErrors()) {
+//            return "failed";
+//        }
+//        return "redirect:OK";
+//    }
 }

@@ -60,21 +60,21 @@ public class Account implements Serializable {
         return registrationIP;
     }
 
-    public Set<Friend> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<Friend> friends) {
-        this.friends = friends;
-    }
-
-    public Set<Friend> getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(Set<Friend> receivers) {
-        this.receivers = receivers;
-    }
+//    public Set<Friend> getFriends() {
+//        return friends;
+//    }
+//
+//    public void setFriends(Set<Friend> friends) {
+//        this.friends = friends;
+//    }
+//
+//    public Set<Friend> getReceivers() {
+//        return receivers;
+//    }
+//
+//    public void setReceivers(Set<Friend> receivers) {
+//        this.receivers = receivers;
+//    }
 
     public String getActiveKey() {
         return activeKey;

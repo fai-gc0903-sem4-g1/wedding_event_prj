@@ -9,13 +9,9 @@ package com.matrimony.entity;
  *
  * @author SON
  */
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 public class Person {
     
     private String name;
-    @NotNull
-    @Min(18)
     private int age;
 
     public String getName() {

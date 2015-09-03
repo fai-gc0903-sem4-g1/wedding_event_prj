@@ -5,6 +5,7 @@
  */
 package com.matrimony.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author SON
  */
 @Entity(name="friend")
-public class Friend {
+public class Friend implements Serializable {
     @Id
     @Column(nullable = false)
     @GenericGenerator(name = "id", strategy = "auto_increment")
