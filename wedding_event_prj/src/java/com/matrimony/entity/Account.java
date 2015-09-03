@@ -36,11 +36,12 @@ public class Account implements Serializable {
     private String contactNumber;
     private String registrationIP;
     private String activeKey;
+    private String lastIPLogin;
+    private String regMethod;
     private Timestamp lastTimeLogin;
     private Timestamp registrationTime;
     private Timestamp lastTimeChangePassword;
     private Timestamp activeTime;
-    private String lastIPLogin;
     private boolean activated;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
@@ -56,25 +57,33 @@ public class Account implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "receiverId")
     private Set<Friend> receivers;
 
+    public String getRegMethod() {
+        return regMethod;
+    }
+
+    public void setRegMethod(String regMethod) {
+        this.regMethod = regMethod;
+    }
+
     public String getRegistrationIP() {
         return registrationIP;
     }
 
-//    public Set<Friend> getFriends() {
-//        return friends;
-//    }
-//
-//    public void setFriends(Set<Friend> friends) {
-//        this.friends = friends;
-//    }
-//
-//    public Set<Friend> getReceivers() {
-//        return receivers;
-//    }
-//
-//    public void setReceivers(Set<Friend> receivers) {
-//        this.receivers = receivers;
-//    }
+    public Set<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public Set<Friend> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(Set<Friend> receivers) {
+        this.receivers = receivers;
+    }
 
     public String getActiveKey() {
         return activeKey;

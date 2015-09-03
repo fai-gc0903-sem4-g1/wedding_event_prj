@@ -11,6 +11,9 @@ import com.matrimony.entity.Account;
 import com.matrimony.entity.UserProfile;
 import com.matrimony.exception.STException;
 import com.matrimony.util.MailUtil;
+import facebook.api.FBConnection;
+import facebook.api.FBGraph;
+import facebook.entity.FBProfile;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -18,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,17 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "account")
 public class AccountController {
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String showLogin(HttpServletRequest request) {
-        System.out.println(request.getRemoteAddr());
-        return "login";
-    }
-
-    @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String register() {
-        return "register";
-    }
-
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String qogin(HttpServletRequest request, Account accountLogin) {
         System.out.println(accountLogin);
@@ -49,7 +42,7 @@ public class AccountController {
                 account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
                 account.setLastIPLogin(request.getRemoteAddr());
                 AccountDAO.Update(account);
-                request.getSession().setAttribute("currentAccount", account);
+                request.getSession().setAttribute("account", account);
                 if (account.isActivated()) {
                     request.setAttribute("notice", "Đăng nhập thành công");
                     return "success";
@@ -75,9 +68,10 @@ public class AccountController {
         accountReg.setRegistrationIP(request.getRemoteAddr());
         String activeKey = UUID.randomUUID().toString().toUpperCase(); //Generate key active
         accountReg.setActiveKey(activeKey);
+        accountReg.setRegMethod("native");
         try {
             AccountDAO.add(accountReg);
-            
+
             /*=====Create user profile=====*/
             Account a = AccountDAO.findByUsername(accountReg.getUsername());
             Date birthday = Date.valueOf(year + "-" + month + "-" + day);
@@ -97,7 +91,7 @@ public class AccountController {
             /*=====Send mail to active=====*/
             MailUtil mailUtil = new MailUtil(accountReg.getEmail(), subject, content.toString());
             mailUtil.send();
-            request.getSession().setAttribute("currentAccount", a);
+            request.getSession().setAttribute("account", a);
             return "active";
         } catch (STException.UsernameAlready ex) {
             System.out.println(ex.getMessage());
@@ -116,7 +110,7 @@ public class AccountController {
 
     @RequestMapping(value = "active", method = RequestMethod.POST)
     public String active(HttpServletRequest request, String activeKey) {
-        Account curAccount = (Account) request.getSession().getAttribute("currentAccount");
+        Account curAccount = (Account) request.getSession().getAttribute("account");
         if (curAccount.getActiveKey().equals(activeKey)) {
             curAccount.setActivated(true);
             curAccount.setActiveTime(new Timestamp(System.currentTimeMillis()));
@@ -125,5 +119,20 @@ public class AccountController {
         } else {
             return "active";
         }
+    }
+
+    @RequestMapping(value = "loginWithFacebook", method = RequestMethod.GET)
+    public String loginWithFacebook(HttpServletRequest request, String code) {
+        FBConnection fb = new FBConnection();
+        System.out.println(code);
+        FBGraph fbGraph = new FBGraph();
+        FBProfile profile = fbGraph.getFBProfile(code);
+        return null;
+    }
+
+    @RequestMapping(value = "FBRedirect", method = RequestMethod.GET)
+    public String FBRedirect(String code) {
+        System.out.println(code);
+        return "notyet";
     }
 }

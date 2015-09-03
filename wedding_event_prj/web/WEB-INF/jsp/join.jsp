@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../bundle/bootstrap.jsp"/>
 <jsp:include page="../bundle/jstl.jsp"/>
+<jsp:useBean id="fbConn" class="facebook.api.FBConnection" />
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -38,13 +39,13 @@
 
         </div> <!-- /row -->
         <div class="row">
-
             <div id="loginWith" class="col-lg-12 text-center v-center" style="font-size:37pt;">
                 <label style="font-size:18px;">Login with</label>
-                <a href="#"><i class="icon-google-plus"></i></a> <a href="#"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
+                <a href="#"><i class="icon-google-plus"></i></a> <a href="/wedding_event_prj/account/loginWithFacebook"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
             </div>
 
         </div>
+        <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
                 <form id="loginForm" action="/wedding_event_prj/account/login" method="POST"

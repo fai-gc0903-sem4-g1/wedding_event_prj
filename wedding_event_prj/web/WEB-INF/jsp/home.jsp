@@ -15,5 +15,6 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
+        <a href="#">${sessionScope.currentUser.name}</a>
     </body>
 </html>

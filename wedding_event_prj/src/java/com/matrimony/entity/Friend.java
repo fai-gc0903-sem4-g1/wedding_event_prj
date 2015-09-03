@@ -21,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Friend implements Serializable {
     @Id
     @Column(nullable = false)
-    @GenericGenerator(name = "id", strategy = "auto_increment")
+    @GenericGenerator(name = "id", strategy = "uuid")
     @GeneratedValue(generator = "id")
     private String friendId;
     private String senderId;

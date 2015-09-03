@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,12 +15,12 @@
     </head>
     <body>
         <c:choose>
-            <c:when test="${empty sessionScope.currentAccount}">
+            <c:when test="${empty sessionScope.currentAccount || sessionScope.currentAccount.activated==false}">
                 <jsp:include page="join.jsp"/>
             </c:when>
-            <c:when test="${sessionScope.currentAccount.activated==true}">
+            <c:otherwise>
                <jsp:include page="home.jsp"/>
-            </c:when>
+            </c:otherwise>
         </c:choose>
     </body>
 </html>
