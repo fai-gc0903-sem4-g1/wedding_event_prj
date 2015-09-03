@@ -119,6 +119,12 @@ public class AccountController {
             return "active";
         }
     }
+    
+    @RequestMapping(value = "{username}", method = RequestMethod.GET)
+    public String profile(String username) {
+        System.out.println(username);
+        return "notyet";
+    }
 
     @RequestMapping(value = "loginWithFacebook", method = RequestMethod.GET)
     public String loginWithFacebook(HttpServletRequest request, String code) {
@@ -134,4 +140,6 @@ public class AccountController {
         System.out.println(code);
         return "notyet";
     }
+    
+    
 }

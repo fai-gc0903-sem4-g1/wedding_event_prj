@@ -5,10 +5,15 @@
  */
 package com.matrimony.database;
 
+import com.matrimony.entity.Account;
+import java.util.List;
+
 /**
  *
  * @author SON
  */
-public interface IDAO {
-    public void add(Object obj);
+public class PeopleSuggest {
+    public static List<Account> suggestByAge(){
+        return null;
+    }
 }
