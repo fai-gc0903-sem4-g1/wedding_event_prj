@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Kich hoat tai khoan</h1>
         <form action="/wedding_event_prj/account/active" method="POST">
             <label>Chúng tôi vừa gửi key active vào mail của bạn, hãy kiếm tra mail kể trong mục spam!!!Nhập key vào đây</label>
             <input type="text" name="activeKey"/>

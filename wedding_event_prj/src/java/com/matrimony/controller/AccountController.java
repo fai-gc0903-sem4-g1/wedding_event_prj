@@ -20,8 +20,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,9 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "account")
 public class AccountController {
-
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String qogin(HttpServletRequest request, Account accountLogin) {
+    public String qogin(HttpServletRequest request, Account accountLogin, HttpSession session) {
         System.out.println(accountLogin);
         if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
             try {
@@ -42,10 +41,10 @@ public class AccountController {
                 account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
                 account.setLastIPLogin(request.getRemoteAddr());
                 AccountDAO.Update(account);
-                request.getSession().setAttribute("account", account);
+                session.setAttribute("account", account);
+                System.out.println(account.getUsername() + " logged in");
                 if (account.isActivated()) {
-                    request.setAttribute("notice", "Đăng nhập thành công");
-                    return "success";
+                    return "index";
                 } else {
                     return "active";
                 }
@@ -62,7 +61,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request, Account accountReg, String day, String month, String year) {
+    public String register(HttpServletRequest request, Account accountReg, UserProfile userProfileReg, String day, String month, String year) {
         System.out.println(accountReg);
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         accountReg.setRegistrationIP(request.getRemoteAddr());
@@ -75,10 +74,10 @@ public class AccountController {
             /*=====Create user profile=====*/
             Account a = AccountDAO.findByUsername(accountReg.getUsername());
             Date birthday = Date.valueOf(year + "-" + month + "-" + day);
-            UserProfile userProfile = new UserProfile();
-            userProfile.setAccountId(a.getAccountId());
-            userProfile.setBirthday(birthday);
-            UserProfileDAO.add(userProfile);
+            userProfileReg.setAccountId(a.getAccountId());
+            userProfileReg.setBirthday(birthday);
+            System.out.println(userProfileReg);
+            UserProfileDAO.add(userProfileReg);
 
             /*=====Tao noi dung email can gui=====*/
             String subject = "Chao mung den voi matrimony, kich hoat tai khoan";
@@ -91,7 +90,7 @@ public class AccountController {
             /*=====Send mail to active=====*/
             MailUtil mailUtil = new MailUtil(accountReg.getEmail(), subject, content.toString());
             mailUtil.send();
-            request.getSession().setAttribute("account", a);
+            request.getSession().setAttribute("account", AccountDAO.findByUsername(accountReg.getUsername()));
             return "active";
         } catch (STException.UsernameAlready ex) {
             System.out.println(ex.getMessage());

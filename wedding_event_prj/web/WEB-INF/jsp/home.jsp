@@ -4,9 +4,13 @@
     Author     : SON
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../bundle/bootstrap.jsp"/>
 <jsp:include page="../bundle/jstl.jsp"/>
+<jsp:useBean id="accountDAO" class="com.matrimony.database.AccountDAO"/>
+<c:set var="account" value="${sessionScope.account}"/>
+<c:set var="userProfile" value="${account.userProfiles.iterator().next()}"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +19,7 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
-        <a href="#">${sessionScope.currentUser.name}</a>
+        
+        <a href="#">${userProfile.lastName} ${userProfile.middleName} ${userProfile.firstName}</a>
     </body>
 </html>
