@@ -6,6 +6,7 @@
 package com.matrimony.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Set;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -38,6 +41,17 @@ public class Account implements Serializable {
     private String salt;
     @Email
     private String email;
+    @Min(2)
+    @Max(30)
+    private String firstName;
+    @Min(2)
+    @Max(30)
+    private String middleName;
+    @Min(2)
+    @Max(30)
+    private String lastName;
+    private String gender;
+    private Date birthday;
     private String roleName;
     private String contactNumber;
     private String registrationIP;
@@ -65,6 +79,46 @@ public class Account implements Serializable {
 
     public String getRegMethod() {
         return regMethod;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public void setRegMethod(String regMethod) {

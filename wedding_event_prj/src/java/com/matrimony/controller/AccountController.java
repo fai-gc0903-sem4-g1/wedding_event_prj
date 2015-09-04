@@ -35,21 +35,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "account")
 public class AccountController {
-    
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String viewLogin(Model model){
+    public String viewLogin(Model model) {
         return "index";
     }
-    
+
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String viewRegister(Model model){
+    public String viewRegister(Model model) {
         return "index";
     }
-    
+
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin(HttpServletRequest request,@Valid Account accountLogin, BindingResult bindingResult , HttpSession session) {
+    public String doLogin(HttpServletRequest request, @Valid Account accountLogin, BindingResult bindingResult, HttpSession session) {
         System.out.println(accountLogin);
-        if(bindingResult.hasErrors()) return "index";
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
         if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
             try {
                 Account account = AccountDAO.login(accountLogin.getUsername(), accountLogin.getPasswordHash());
@@ -76,25 +78,21 @@ public class AccountController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request,@Valid Account accountReg, BindingResult bindingResult, UserProfile userProfileReg, String day, String month, String year) {
+    public String register(HttpServletRequest request, Account accountReg, BindingResult accountResult, String day, String month, String year) {
         System.out.println(accountReg);
-        if(bindingResult.hasErrors()) return "index";
+        if (accountResult.hasErrors()) {
+            return "index";
+        }
+
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         accountReg.setRegistrationIP(request.getRemoteAddr());
         String activeKey = UUID.randomUUID().toString().toUpperCase(); //Generate key active
         accountReg.setActiveKey(activeKey);
+        Date birthday = Date.valueOf(year + "-" + month + "-" + day);
+        accountReg.setBirthday(birthday);
         accountReg.setRegMethod("native");
         try {
             AccountDAO.add(accountReg);
-
-            /*=====Create user profile=====*/
-            Account a = AccountDAO.findByUsername(accountReg.getUsername());
-            Date birthday = Date.valueOf(year + "-" + month + "-" + day);
-            userProfileReg.setAccountId(a.getAccountId());
-            userProfileReg.setBirthday(birthday);
-            System.out.println(userProfileReg);
-            UserProfileDAO.add(userProfileReg);
-
             /*=====Tao noi dung email can gui=====*/
             String subject = "Chao mung den voi matrimony, kich hoat tai khoan";
             StringBuilder content = new StringBuilder();
@@ -135,7 +133,7 @@ public class AccountController {
             return "active";
         }
     }
-    
+
     @RequestMapping(value = "{abc/{username}}", method = RequestMethod.GET)
     public String profile(String username) {
         System.out.println("Da nhan duoc roi");
@@ -156,6 +154,5 @@ public class AccountController {
         System.out.println(code);
         return "notyet";
     }
-    
-    
+
 }

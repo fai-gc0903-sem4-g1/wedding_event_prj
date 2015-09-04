@@ -6,6 +6,7 @@
 package com.matrimony.controller;
 
 import com.matrimony.entity.Account;
+import com.matrimony.entity.UserProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GlobalController {
     @RequestMapping(value="/")
     public String index(Model model){
-        model.addAttribute("account", new Account());
+        model.addAttribute("accountLogin", new Account());
+        model.addAttribute("userProfileReg", new UserProfile());
         System.out.println("HHHHHH");
         return "index";
     }

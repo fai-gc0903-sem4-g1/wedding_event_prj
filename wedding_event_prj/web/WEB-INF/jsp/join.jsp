@@ -50,7 +50,7 @@
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
 
-                <form:form modelAttribute="account" id="loginForm" action="/wedding_event_prj/account/login" method="POST"
+                <form:form modelAttribute="accountLogin" id="loginForm" action="/wedding_event_prj/account/login" method="POST"
                            class="form-horizontal col-md-4">
                     <div class="form-group">
                         <!--<label class="col-sm-4 control-label">Tên đăng nhập</label>-->
@@ -90,8 +90,9 @@
 
 
 
-                <form id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
+                <form:form modelAttribute="userProfileReg" id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
+                    <form:errors path="firstName" cssClass="error"/>
                     <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
 
                     <div class="form-group">
@@ -108,6 +109,7 @@
                             <input id="lastName" class="form-control" type="text" name="lastName"
                                    placeholder="Last"></input>
                         </div>
+                        <form:errors path="firstName" cssClass="error"/>
                     </div>
 
                     <div class="form-group">
@@ -211,7 +213,7 @@
                             <input class="btn btn-success" style="width: 200px;" type="submit" value="Đăng ký" />
                         </div>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </body>

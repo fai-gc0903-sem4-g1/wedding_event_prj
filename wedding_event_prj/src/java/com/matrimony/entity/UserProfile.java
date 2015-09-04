@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -26,11 +28,6 @@ public class UserProfile implements Serializable {
     @GeneratedValue(generator="id")
     private String userProfileId;
     private String accountId;//foreign key
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String gender;
-    private Date birthday;
     private String maritalStatus;
     private int height;
     private int weight;
@@ -47,10 +44,7 @@ public class UserProfile implements Serializable {
         return lastUpdateProfile;
     }
 
-    @Override
-    public String toString() {
-        return "UserProfile{" + "userProfileId=" + userProfileId + ", accountId=" + accountId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", birthday=" + birthday + ", maritalStatus=" + maritalStatus + ", height=" + height + ", weight=" + weight + ", country=" + country + ", city=" + city + ", countryLiveIn=" + countryLiveIn + ", cityLiveIn=" + cityLiveIn + ", religion=" + religion + ", caste=" + caste + ", introduction=" + introduction + ", lastUpdateProfile=" + lastUpdateProfile + '}';
-    }
+    
 
     public void setLastUpdateProfile(Timestamp lastUpdateProfile) {
         this.lastUpdateProfile = lastUpdateProfile;
@@ -78,46 +72,6 @@ public class UserProfile implements Serializable {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public String getMaritalStatus() {
