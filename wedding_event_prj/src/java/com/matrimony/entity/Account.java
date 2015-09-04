@@ -21,6 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -41,15 +42,12 @@ public class Account implements Serializable {
     private String salt;
     @Email
     private String email;
-    @Min(2)
-    @Max(30)
+    @Range(min = 2, max = 30)
     private String firstName;
-    @Min(2)
-    @Max(30)
     private String middleName;
-    @Min(2)
-    @Max(30)
+    @Range(min = 2, max = 30)
     private String lastName;
+    @NotEmpty
     private String gender;
     private Date birthday;
     private String roleName;
@@ -247,8 +245,9 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "accountId=" + accountId + ", username=" + username + ", passwordHash=" + passwordHash + ", salt=" + salt + ", email=" + email + ", lastTimeLogin=" + lastTimeLogin + ", registrationTime=" + registrationTime + ", lastTimeChangePassword=" + lastTimeChangePassword + ", lastIPLogin=" + lastIPLogin + ", activated=" + activated + ", roleName=" + roleName + ", userProfiles=" + userProfiles + ", userHobbys=" + userHobbys + ", userFriends=" + userFriends + ", inviteAddFriends=" + inviteAddFriends + '}';
+        return "Account{" + "accountId=" + accountId + ", username=" + username + ", passwordHash=" + passwordHash + ", salt=" + salt + ", email=" + email + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", birthday=" + birthday + ", roleName=" + roleName + ", contactNumber=" + contactNumber + ", registrationIP=" + registrationIP + ", activeKey=" + activeKey + ", lastIPLogin=" + lastIPLogin + ", regMethod=" + regMethod + ", lastTimeLogin=" + lastTimeLogin + ", registrationTime=" + registrationTime + ", lastTimeChangePassword=" + lastTimeChangePassword + ", activeTime=" + activeTime + ", activated=" + activated + ", userProfiles=" + userProfiles + ", userHobbys=" + userHobbys + ", userFriends=" + userFriends + ", inviteAddFriends=" + inviteAddFriends + ", friends=" + friends + ", receivers=" + receivers + '}';
     }
+
 
     public String getUsername() {
         return username;

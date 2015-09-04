@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -47,8 +48,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin(HttpServletRequest request, @Valid Account accountLogin, BindingResult bindingResult, HttpSession session) {
-        System.out.println(accountLogin);
+    public String doLogin(HttpServletRequest request, @Valid @ModelAttribute("accountLogin") Account accountLogin, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "index";
         }
@@ -78,20 +78,20 @@ public class AccountController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request, Account accountReg, BindingResult accountResult, String day, String month, String year) {
+    public String register(HttpServletRequest request, @Valid @ModelAttribute("accountReg") Account accountReg, BindingResult bindingResult, String day, String month, String year) {
         System.out.println(accountReg);
-        if (accountResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "index";
         }
-
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         accountReg.setRegistrationIP(request.getRemoteAddr());
         String activeKey = UUID.randomUUID().toString().toUpperCase(); //Generate key active
         accountReg.setActiveKey(activeKey);
-        Date birthday = Date.valueOf(year + "-" + month + "-" + day);
-        accountReg.setBirthday(birthday);
         accountReg.setRegMethod("native");
         try {
+
+            Date birthday = Date.valueOf(year + "-" + month + "-" + day);
+            accountReg.setBirthday(birthday);
             AccountDAO.add(accountReg);
             /*=====Tao noi dung email can gui=====*/
             String subject = "Chao mung den voi matrimony, kich hoat tai khoan";
@@ -118,6 +118,10 @@ public class AccountController {
             System.out.println(ex.getMessage());
             request.setAttribute("notice", "ContactNumberAlready");
             return "failed";
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex + ": Date not correct");
+            request.setAttribute("birthdayValid", "Ngày tháng chọn sai");
+            return "index";
         }
     }
 

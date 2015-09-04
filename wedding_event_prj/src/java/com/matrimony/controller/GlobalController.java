@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GlobalController {
     @RequestMapping(value="/")
-    public String index(Model model){
-        model.addAttribute("accountLogin", new Account());
-        model.addAttribute("userProfileReg", new UserProfile());
+    public String index(){
         System.out.println("HHHHHH");
         return "index";
     }

@@ -28,6 +28,9 @@
             font-size: 17px;
             margin: 4% -6%;
         }
+        .error{
+            color:red;
+        }
     </style>
     <body>
         <div class="row">
@@ -49,11 +52,9 @@
         <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
-
                 <form:form modelAttribute="accountLogin" id="loginForm" action="/wedding_event_prj/account/login" method="POST"
                            class="form-horizontal col-md-4">
                     <div class="form-group">
-                        <!--<label class="col-sm-4 control-label">Tên đăng nhập</label>-->
                         <div class="col-sm-offset-2 col-sm-8">
                             <input class="form-control" type="text" value="${cookie.cUsername.value}" name="username"
                                    placeholder="Tên tài khoản"></input>
@@ -73,7 +74,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2">
                             <div class="checkbox">
-                                <label><input type="checkbox" name="rememberMe" /> Remember me</label>
+                                <label><input type="checkbox" name="keepLoggin" /> Keep me logged in</label>
                                 <a class="col-sm-offset-1" style="color:#ffffff" href="/ShoppingAssignment/account/recover-account.jsp">Lấy lại mật khẩu</a>
                             </div>
                         </div>
@@ -90,9 +91,8 @@
 
 
 
-                <form:form modelAttribute="userProfileReg" id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
+                <form:form modelAttribute="accountReg" id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
-                    <form:errors path="firstName" cssClass="error"/>
                     <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
 
                     <div class="form-group">
@@ -109,27 +109,23 @@
                             <input id="lastName" class="form-control" type="text" name="lastName"
                                    placeholder="Last"></input>
                         </div>
-                        <form:errors path="firstName" cssClass="error"/>
+                        <form:errors path="firstName" cssStyle="error" cssClass="control-label col-sm-offset-2 error"/>
                     </div>
-
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                        <div class="col-sm-9 has-feedback has-feedback-left">
-                            <img style="display: none; padding: 6px 6px;" class="form-control-feedback"
-                                 src="resources/img/loading.gif" id="userChecking"></img>
-                            <i id="userOk" style="display: none; color: green;"
-                               class="form-control-feedback glyphicon glyphicon-ok"></i>
-                            <i id="userAlready" style="display: none; color: red"
-                               class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
+                        <div class="col-sm-9">
                             <input id="username" onkeyup="userChecker()" class="form-control" type="text" name="username"
                                    placeholder="Tên người dùng"></input>
+                            <form:errors path="username" cssClass="error"/>
                         </div>
+                       
                     </div>
 
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-9">
                             <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
+                            <form:errors path="passwordHash" cssClass="error"/>
                         </div>
                     </div>                                        <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
@@ -147,6 +143,7 @@
                             <i id="emailAlready" style="display: none; color: red;"
                                class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
                             <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Email"></input>
+                            <div><form:errors path="email" cssClass="error"/></div>
                         </div>
                     </div>
 
@@ -155,6 +152,7 @@
                         <div class="col-sm-9">
                             <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
                                    placeholder="Phone number"></input>
+                            <form:errors path="contactNumber" cssClass="error"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -168,6 +166,7 @@
 
                             </select>
                         </div>
+                        
                         <div class="col-sm-3">
                             <select class="form-control" type="text" name="month">
                                 <option>Tháng</option>
@@ -186,6 +185,7 @@
 
                             </select>
                         </div>
+                        <div>${requestScope.birthdayValid}</div>
                     </div>
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1"></label>
@@ -193,7 +193,6 @@
                             <label class="control-label">Giới tính</label>
                         </div>
                         <br/>
-
                         <div style="font-size: 17px;" class="checkbox" id="sexGroup">
                             <label style="color: red;" class="control-label col-sm-1"></label>
                             <label class="control-label">
@@ -204,6 +203,7 @@
                                 <input id="sex" type="radio" name="gender" value="male" />
                                 Nam
                             </label>
+                            <label class="control-label"><form:errors path="gender" cssClass="error"/></label>
                         </div>
                     </div>
 
@@ -213,6 +213,7 @@
                             <input class="btn btn-success" style="width: 200px;" type="submit" value="Đăng ký" />
                         </div>
                     </div>
+                    
                 </form:form>
             </div>
         </div>
