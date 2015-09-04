@@ -15,6 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -28,9 +31,12 @@ public class Account implements Serializable {
     @GenericGenerator(name = "id", strategy = "uuid")
     @GeneratedValue(generator = "id")
     private String accountId;
+    @Length(min = 4, max = 50)
     private String username;
+    @Length(min = 4, max = 100)
     private String passwordHash;
     private String salt;
+    @Email
     private String email;
     private String roleName;
     private String contactNumber;

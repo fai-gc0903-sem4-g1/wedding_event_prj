@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../bundle/bootstrap.jsp"/>
 <jsp:include page="../bundle/jstl.jsp"/>
 <jsp:useBean id="fbConn" class="facebook.api.FBConnection" />
@@ -48,13 +49,15 @@
         <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
-                <form id="loginForm" action="/wedding_event_prj/account/login" method="POST"
-                      class="form-horizontal col-md-4">
+
+                <form:form modelAttribute="account" id="loginForm" action="/wedding_event_prj/account/login" method="POST"
+                           class="form-horizontal col-md-4">
                     <div class="form-group">
                         <!--<label class="col-sm-4 control-label">Tên đăng nhập</label>-->
                         <div class="col-sm-offset-2 col-sm-8">
                             <input class="form-control" type="text" value="${cookie.cUsername.value}" name="username"
                                    placeholder="Tên tài khoản"></input>
+                            <form:errors path="username" cssClass="error"/>
                         </div>
                     </div>
 
@@ -63,6 +66,7 @@
                         <div class="col-sm-offset-2 col-sm-8">
                             <input class="form-control" type="password" value="${cookie.cPassword.value}" name="passwordHash"
                                    placeholder="Mật khẩu" />
+                            <form:errors path="passwordHash" cssClass="error"/>
                         </div>
                     </div>
 
@@ -80,7 +84,10 @@
                             <input class="btn btn-primary" type="submit" value="Đăng nhập" />
                         </div>
                     </div>
-                </form>
+                </form:form>
+
+
+
 
 
                 <form id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">

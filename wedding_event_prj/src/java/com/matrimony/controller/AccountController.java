@@ -21,7 +21,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,9 +35,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "account")
 public class AccountController {
+    
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String viewLogin(Model model){
+        return "index";
+    }
+    
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String viewRegister(Model model){
+        return "index";
+    }
+    
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String qogin(HttpServletRequest request, Account accountLogin, HttpSession session) {
+    public String doLogin(HttpServletRequest request,@Valid Account accountLogin, BindingResult bindingResult , HttpSession session) {
         System.out.println(accountLogin);
+        if(bindingResult.hasErrors()) return "index";
         if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
             try {
                 Account account = AccountDAO.login(accountLogin.getUsername(), accountLogin.getPasswordHash());
@@ -61,8 +76,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request, Account accountReg, UserProfile userProfileReg, String day, String month, String year) {
+    public String register(HttpServletRequest request,@Valid Account accountReg, BindingResult bindingResult, UserProfile userProfileReg, String day, String month, String year) {
         System.out.println(accountReg);
+        if(bindingResult.hasErrors()) return "index";
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
         accountReg.setRegistrationIP(request.getRemoteAddr());
         String activeKey = UUID.randomUUID().toString().toUpperCase(); //Generate key active

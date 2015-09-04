@@ -5,10 +5,10 @@
  */
 package com.matrimony.controller;
 
+import com.matrimony.entity.Account;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class GlobalController {
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/")
     public String index(Model model){
+        model.addAttribute("account", new Account());
+        System.out.println("HHHHHH");
         return "index";
     }
 }

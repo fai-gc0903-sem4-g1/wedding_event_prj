@@ -6,7 +6,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<jsp:include page="../bundle/bootstrap.jsp"/>
+<jsp:include page="../bundle/jstl.jsp"/>
 <!DOCTYPE html>
 <html>
     <head>
