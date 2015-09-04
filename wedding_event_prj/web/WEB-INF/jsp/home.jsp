@@ -10,7 +10,6 @@
 <jsp:include page="../bundle/jstl.jsp"/>
 <jsp:useBean id="accountDAO" class="com.matrimony.database.AccountDAO"/>
 <c:set var="account" value="${sessionScope.account}"/>
-<c:set var="userProfile" value="${account.userProfiles.iterator().next()}"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,6 +18,6 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
-        <a href="abc/${account.username}">${userProfile.lastName} ${userProfile.middleName} ${userProfile.firstName}</a>
+        <a href="abc/${account.username}">${account.lastName} ${account.middleName} ${account.firstName}</a>
     </body>
 </html>

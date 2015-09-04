@@ -15,13 +15,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -40,12 +37,13 @@ public class Account implements Serializable {
     @Length(min = 4, max = 100)
     private String passwordHash;
     private String salt;
+    @NotEmpty
     @Email
     private String email;
-    @Range(min = 2, max = 30)
+    @Length(min=2, max=30)
     private String firstName;
     private String middleName;
-    @Range(min = 2, max = 30)
+    @Length(min=2, max=30)
     private String lastName;
     @NotEmpty
     private String gender;

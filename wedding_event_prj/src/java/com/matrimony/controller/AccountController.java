@@ -49,9 +49,11 @@ public class AccountController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String doLogin(HttpServletRequest request, @Valid @ModelAttribute("accountLogin") Account accountLogin, BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
+        System.out.println(); 
+        if (bindingResult.hasFieldErrors("username") || bindingResult.hasFieldErrors("passwordHash")) {
             return "index";
         }
+        System.out.println("Pass");
         if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
             try {
                 Account account = AccountDAO.login(accountLogin.getUsername(), accountLogin.getPasswordHash());

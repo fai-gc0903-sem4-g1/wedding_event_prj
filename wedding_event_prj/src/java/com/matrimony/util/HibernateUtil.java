@@ -32,6 +32,6 @@ public class HibernateUtil {
     }
 
     public static void main(String[] args) {
-        HibernateUtil.getSession().getTransaction().commit();
+        HibernateUtil.getSession();
     }
 }

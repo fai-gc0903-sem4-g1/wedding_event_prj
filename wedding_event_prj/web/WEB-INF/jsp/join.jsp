@@ -42,13 +42,6 @@
             </div>
 
         </div> <!-- /row -->
-        <div class="row">
-            <div id="loginWith" class="col-lg-12 text-center v-center" style="font-size:37pt;">
-                <label style="font-size:18px;">Login with</label>
-                <a href="#"><i class="icon-google-plus"></i></a> <a href="/wedding_event_prj/account/loginWithFacebook"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a> <a href="#"><i class="icon-github"></i></a> <a href="#"><i class="icon-pinterest"></i></a>
-            </div>
-
-        </div>
         <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
@@ -74,7 +67,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2">
                             <div class="checkbox">
-                                <label><input type="checkbox" name="keepLoggin" /> Keep me logged in</label>
+                                <label><input type="checkbox" name="keepLoggin" /> Duy trì đăng nhập</label>
                                 <a class="col-sm-offset-1" style="color:#ffffff" href="/ShoppingAssignment/account/recover-account.jsp">Lấy lại mật khẩu</a>
                             </div>
                         </div>
@@ -99,17 +92,18 @@
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-3">
                             <input id="firstName" class="form-control" type="text" name="firstName"
-                                   placeholder="First"></input>
+                                   placeholder="Tên"></input>
                         </div>
                         <div class="col-sm-3">
                             <input id="middleName" class="form-control" type="text" name="middleName"
-                                   placeholder="Middle"></input>
+                                   placeholder="Đệm"></input>
                         </div>
                         <div class="col-sm-3">
                             <input id="lastName" class="form-control" type="text" name="lastName"
-                                   placeholder="Last"></input>
+                                   placeholder="Họ"></input>
                         </div>
                         <form:errors path="firstName" cssStyle="error" cssClass="control-label col-sm-offset-2 error"/>
+                        <form:errors path="lastName" cssStyle="error" cssClass="control-label col-sm-offset-4 error"/>
                     </div>
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
@@ -142,7 +136,7 @@
                                class="form-control-feedback glyphicon glyphicon-ok"></i>
                             <i id="emailAlready" style="display: none; color: red;"
                                class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
-                            <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Email"></input>
+                            <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Địa chỉ email"></input>
                             <div><form:errors path="email" cssClass="error"/></div>
                         </div>
                     </div>
@@ -151,7 +145,7 @@
                         <label style="color: red;" class="control-label col-sm-1"></label>
                         <div class="col-sm-9">
                             <input id="phoneNumber" class="form-control" type="text" name="contactNumber"
-                                   placeholder="Phone number"></input>
+                                   placeholder="Số điện thoại nếu có"></input>
                             <form:errors path="contactNumber" cssClass="error"/>
                         </div>
                     </div>
@@ -185,7 +179,7 @@
 
                             </select>
                         </div>
-                        <div>${requestScope.birthdayValid}</div>
+                        <div class="error col-sm-5 col-sm-offset-2">${requestScope.birthdayValid}</div>
                     </div>
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1"></label>
