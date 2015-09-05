@@ -81,12 +81,7 @@ public class AccountDAO {
     }
 
     public static Account login(String loginName, String password) throws STException.UsernameNotExist, STException.WrongPassword {
-        Account account;
-        if ((account = findByUsername(loginName)) == null) {
-            if ((account = findByEmail(loginName)) == null) {
-                account = findByContactNumber(loginName);
-            }
-        }
+        Account account=findByLoginName(loginName);
         if (account == null) {
             throw new STException.UsernameNotExist("username not exists");
         }
@@ -97,13 +92,18 @@ public class AccountDAO {
             throw new STException.WrongPassword("Wrong password");
         }
     }
+    
+    public static Account findByLoginName(String loginName){
+        Account account;
+        if ((account = findByUsername(loginName)) == null) {
+            if ((account = findByEmail(loginName)) == null) {
+                account = findByContactNumber(loginName);
+            }
+        }
+        return account;
+    }
 
     public static void main(String[] args) {
-        Account account = findByUsername("kunedo");
-        System.out.println(account);
-        account.setActivated(true);
-        Update(account);
-        Account a = findByUsername("kunedo");
-        System.out.println(a);
+        System.out.println(findByUsername("kunedo"));
     }
 }

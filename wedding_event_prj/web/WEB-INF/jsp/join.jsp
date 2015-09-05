@@ -45,11 +45,11 @@
         <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
-                <form:form modelAttribute="accountLogin" id="loginForm" action="/wedding_event_prj/account/login" method="POST"
+                <form:form modelAttribute="accountLogin" id="loginForm" action="/wedding_event_prj/login" method="POST"
                            class="form-horizontal col-md-4">
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <input class="form-control" type="text" value="${cookie.cUsername.value}" name="username"
+                            <input class="form-control" type="text" value="${cookie.loginName.value}" name="username"
                                    placeholder="Tên tài khoản"></input>
                             <form:errors path="username" cssClass="error"/>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <!--<label class="col-sm-4 control-label">Mật khẩu</label>-->
                         <div class="col-sm-offset-2 col-sm-8">
-                            <input class="form-control" type="password" value="${cookie.cPassword.value}" name="passwordHash"
+                            <input class="form-control" type="password" value="${cookie.password.value}" name="passwordHash"
                                    placeholder="Mật khẩu" />
                             <form:errors path="passwordHash" cssClass="error"/>
                         </div>
@@ -84,7 +84,7 @@
 
 
 
-                <form:form modelAttribute="accountReg" id="registerForm" action="/wedding_event_prj/account/register" method="POST" class="form-horizontal col-md-4">
+                <form:form modelAttribute="accountReg" id="registerForm" action="/wedding_event_prj/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
                     <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
 

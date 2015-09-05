@@ -1,6 +1,6 @@
 <%-- 
-    Document   : profile
-    Created on : Sep 3, 2015, 3:47:23 PM
+    Document   : accountRecover
+    Created on : Sep 4, 2015, 8:39:35 PM
     Author     : SON
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Đây là trang cá nhân của ${requestScope.account.firstName} ${requestScope.account.lastName}</h1>
+        <h1>Account recover</h1>
     </body>
 </html>

@@ -5,10 +5,8 @@
  */
 package com.matrimony.controller;
 
-import com.matrimony.entity.Account;
-import com.matrimony.entity.UserProfile;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -18,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GlobalController {
     @RequestMapping(value="/")
-    public String index(){
-        System.out.println("HHHHHH");
+    public String index(HttpSession session){
+        System.out.println("Go to index OK");
+        System.out.println(session.getAttribute("account"));
         return "index";
     }
+    
+    
 }

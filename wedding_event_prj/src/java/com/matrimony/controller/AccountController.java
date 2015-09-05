@@ -6,9 +6,7 @@
 package com.matrimony.controller;
 
 import com.matrimony.database.AccountDAO;
-import com.matrimony.database.UserProfileDAO;
 import com.matrimony.entity.Account;
-import com.matrimony.entity.UserProfile;
 import com.matrimony.exception.STException;
 import com.matrimony.util.MailUtil;
 import facebook.api.FBConnection;
@@ -19,7 +17,9 @@ import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author SON
  */
 @Controller
-@RequestMapping(value = "account")
 public class AccountController {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -48,39 +47,45 @@ public class AccountController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin(HttpServletRequest request, @Valid @ModelAttribute("accountLogin") Account accountLogin, BindingResult bindingResult, HttpSession session) {
-        System.out.println(); 
+    public String doLogin(HttpServletResponse response, HttpServletRequest request, @Valid @ModelAttribute("accountLogin") Account accountLogin, BindingResult bindingResult, HttpSession session, String keepLoggin) {
         if (bindingResult.hasFieldErrors("username") || bindingResult.hasFieldErrors("passwordHash")) {
+            System.out.println("form login error");
             return "index";
         }
-        System.out.println("Pass");
-        if (!"".equals(accountLogin.getUsername()) && !"".equals(accountLogin.getPasswordHash())) {
-            try {
-                Account account = AccountDAO.login(accountLogin.getUsername(), accountLogin.getPasswordHash());
-                account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
-                account.setLastIPLogin(request.getRemoteAddr());
-                AccountDAO.Update(account);
-                session.setAttribute("account", account);
-                System.out.println(account.getUsername() + " logged in");
-                if (account.isActivated()) {
-                    return "index";
-                } else {
-                    return "active";
+        try {
+            Account account = AccountDAO.login(accountLogin.getUsername(), accountLogin.getPasswordHash());
+            account.setLastTimeLogin(new Timestamp(System.currentTimeMillis()));
+            account.setLastIPLogin(request.getRemoteAddr());
+            AccountDAO.Update(account);
+            session.setAttribute("account", account);
+            System.out.println(account.getUsername() + " logged in");
+            if (keepLoggin != null) {
+                Cookie[] cookies = new Cookie[3];
+                cookies[0] = new Cookie("loginName", accountLogin.getUsername());
+                cookies[1] = new Cookie("password", accountLogin.getPasswordHash());
+                cookies[2] = new Cookie("keepLoggin", "true");
+                for(Cookie c:cookies){
+                    c.setMaxAge(60 * 60 * 24 * 365);
+                    response.addCookie(c);
                 }
-            } catch (STException.UsernameNotExist ex) {
-                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("notice", "Tài khoản không tồn tại, chúng tôi k tìm thấy tên tài khoản, email hay số điện thoại");
-            } catch (STException.WrongPassword ex) {
-                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("notice", "Sai password");
             }
-            return "failed";
+            if (account.isActivated()) {
+                return "redirect:";
+            } else {
+                return "active";
+            }
+        } catch (STException.UsernameNotExist ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("notice", "Tài khoản không tồn tại, chúng tôi k tìm thấy tên tài khoản, email hay số điện thoại");
+        } catch (STException.WrongPassword ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("notice", "Sai password");
         }
-        return "404";
+        return "failed";
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(HttpServletRequest request, @Valid @ModelAttribute("accountReg") Account accountReg, BindingResult bindingResult, String day, String month, String year) {
+    public String doRegister(HttpServletRequest request, @Valid @ModelAttribute("accountReg") Account accountReg, BindingResult bindingResult, String day, String month, String year) {
         System.out.println(accountReg);
         if (bindingResult.hasErrors()) {
             return "index";
@@ -91,7 +96,6 @@ public class AccountController {
         accountReg.setActiveKey(activeKey);
         accountReg.setRegMethod("native");
         try {
-
             Date birthday = Date.valueOf(year + "-" + month + "-" + day);
             accountReg.setBirthday(birthday);
             AccountDAO.add(accountReg);
@@ -128,22 +132,29 @@ public class AccountController {
     }
 
     @RequestMapping(value = "active", method = RequestMethod.POST)
-    public String active(HttpServletRequest request, String activeKey) {
+    public String doActive(HttpServletRequest request, String activeKey) {
         Account curAccount = (Account) request.getSession().getAttribute("account");
         if (curAccount.getActiveKey().equals(activeKey)) {
             curAccount.setActivated(true);
             curAccount.setActiveTime(new Timestamp(System.currentTimeMillis()));
             AccountDAO.Update(curAccount);
-            return "redirect:/";
+            return "redirect:/wedding_event_prj";
         } else {
             return "active";
         }
     }
 
-    @RequestMapping(value = "{abc/{username}}", method = RequestMethod.GET)
-    public String profile(String username) {
-        System.out.println("Da nhan duoc roi");
-        return "notyet";
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    public String doLogout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] allCookie=request.getCookies();
+        for(Cookie c:allCookie){
+            if("keepLoggin".equals(c.getName())){
+                c.setValue("false");
+                response.addCookie(c);
+            }
+        }
+        session.setAttribute("account", null);
+        return "redirect:";
     }
 
     @RequestMapping(value = "loginWithFacebook", method = RequestMethod.GET)

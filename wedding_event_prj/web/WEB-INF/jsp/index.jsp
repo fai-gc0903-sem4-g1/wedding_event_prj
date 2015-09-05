@@ -15,6 +15,7 @@
    
     </head>
     <body>
+        
         <c:choose>
             <c:when test="${empty sessionScope.account || sessionScope.account.activated==false}">
                 <jsp:include page="join.jsp"/>

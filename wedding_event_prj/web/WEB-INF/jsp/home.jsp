@@ -18,6 +18,10 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
-        <a href="abc/${account.username}">${account.lastName} ${account.middleName} ${account.firstName}</a>
+        <a href="/wedding_event_prj/${account.username}">${account.lastName} ${account.middleName} ${account.firstName}</a>
+        
+        <form action="/wedding_event_prj/logout" method="POST">
+            <input type="submit" value="Đăng xuất"/>
+        </form>
     </body>
 </html>
