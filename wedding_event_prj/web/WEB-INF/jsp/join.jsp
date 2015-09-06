@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-8">
                             <input class="form-control" type="text" value="${cookie.loginName.value}" name="username"
-                                   placeholder="Tên tài khoản"></input>
+                                   placeholder="Email hoặc số điện thoại"></input>
                             <form:errors path="username" cssClass="error"/>
                         </div>
                     </div>
@@ -79,11 +79,6 @@
                         </div>
                     </div>
                 </form:form>
-
-
-
-
-
                 <form:form modelAttribute="accountReg" id="registerForm" action="/wedding_event_prj/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
                     <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
@@ -112,7 +107,7 @@
                                    placeholder="Tên người dùng"></input>
                             <form:errors path="username" cssClass="error"/>
                         </div>
-                       
+
                     </div>
 
                     <div class="form-group">
@@ -121,12 +116,7 @@
                             <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
                             <form:errors path="passwordHash" cssClass="error"/>
                         </div>
-                    </div>                                        <div class="form-group">
-                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                        <div class="col-sm-9">
-                            <input id="rePass" class="form-control" type="password" placeholder="Nhập lại mật khẩu"></input>
-                        </div>
-                    </div>
+                    </div>   
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-9 has-feedback has-feedback-left">
@@ -138,6 +128,13 @@
                                class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
                             <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Địa chỉ email"></input>
                             <div><form:errors path="email" cssClass="error"/></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
+                        <div class="col-sm-9">
+                            <input id="reEmail" class="form-control" type="email" placeholder="Nhập lại địa chỉ email"></input>
                         </div>
                     </div>
 
@@ -160,7 +157,7 @@
 
                             </select>
                         </div>
-                        
+
                         <div class="col-sm-3">
                             <select class="form-control" type="text" name="month">
                                 <option>Tháng</option>
@@ -207,7 +204,7 @@
                             <input class="btn btn-success" style="width: 200px;" type="submit" value="Đăng ký" />
                         </div>
                     </div>
-                    
+
                 </form:form>
             </div>
         </div>

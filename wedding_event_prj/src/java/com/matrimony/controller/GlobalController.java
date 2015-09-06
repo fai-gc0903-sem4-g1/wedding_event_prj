@@ -18,7 +18,6 @@ public class GlobalController {
     @RequestMapping(value="/")
     public String index(HttpSession session){
         System.out.println("Go to index OK");
-        System.out.println(session.getAttribute("account"));
         return "index";
     }
     

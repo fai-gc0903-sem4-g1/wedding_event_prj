@@ -12,6 +12,7 @@ import com.matrimony.util.MailUtil;
 import facebook.api.FBConnection;
 import facebook.api.FBGraph;
 import facebook.entity.FBProfile;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -36,16 +37,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AccountController {
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String viewLogin(Model model) {
-        return "index";
-    }
-
-    @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String viewRegister(Model model) {
-        return "index";
-    }
-
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String doLogin(HttpServletResponse response, HttpServletRequest request, @Valid @ModelAttribute("accountLogin") Account accountLogin, BindingResult bindingResult, HttpSession session, String keepLoggin) {
         if (bindingResult.hasFieldErrors("username") || bindingResult.hasFieldErrors("passwordHash")) {
@@ -64,7 +55,7 @@ public class AccountController {
                 cookies[0] = new Cookie("loginName", accountLogin.getUsername());
                 cookies[1] = new Cookie("password", accountLogin.getPasswordHash());
                 cookies[2] = new Cookie("keepLoggin", "true");
-                for(Cookie c:cookies){
+                for (Cookie c : cookies) {
                     c.setMaxAge(60 * 60 * 24 * 365);
                     response.addCookie(c);
                 }
@@ -87,7 +78,15 @@ public class AccountController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String doRegister(HttpServletRequest request, @Valid @ModelAttribute("accountReg") Account accountReg, BindingResult bindingResult, String day, String month, String year) {
         System.out.println(accountReg);
+        Date birthday = null;
         if (bindingResult.hasErrors()) {
+            try {
+                birthday = Date.valueOf(year + "-" + month + "-" + day);
+            } catch (IllegalArgumentException ex) {
+
+                System.out.println(ex + ": Date not correct");
+                request.setAttribute("birthdayValid", "Ngày tháng chọn sai");
+            }
             return "index";
         }
         accountReg.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
@@ -96,7 +95,6 @@ public class AccountController {
         accountReg.setActiveKey(activeKey);
         accountReg.setRegMethod("native");
         try {
-            Date birthday = Date.valueOf(year + "-" + month + "-" + day);
             accountReg.setBirthday(birthday);
             AccountDAO.add(accountReg);
             /*=====Tao noi dung email can gui=====*/
@@ -111,7 +109,7 @@ public class AccountController {
             MailUtil mailUtil = new MailUtil(accountReg.getEmail(), subject, content.toString());
             mailUtil.send();
             request.getSession().setAttribute("account", AccountDAO.findByUsername(accountReg.getUsername()));
-            return "active";
+            return "redirect:active";
         } catch (STException.UsernameAlready ex) {
             System.out.println(ex.getMessage());
             request.setAttribute("notice", "UsernameAlready");
@@ -124,10 +122,6 @@ public class AccountController {
             System.out.println(ex.getMessage());
             request.setAttribute("notice", "ContactNumberAlready");
             return "failed";
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex + ": Date not correct");
-            request.setAttribute("birthdayValid", "Ngày tháng chọn sai");
-            return "index";
         }
     }
 
@@ -138,7 +132,7 @@ public class AccountController {
             curAccount.setActivated(true);
             curAccount.setActiveTime(new Timestamp(System.currentTimeMillis()));
             AccountDAO.Update(curAccount);
-            return "redirect:/wedding_event_prj";
+            return "redirect:";
         } else {
             return "active";
         }
@@ -146,9 +140,9 @@ public class AccountController {
 
     @RequestMapping(value = "logout", method = RequestMethod.POST)
     public String doLogout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] allCookie=request.getCookies();
-        for(Cookie c:allCookie){
-            if("keepLoggin".equals(c.getName())){
+        Cookie[] allCookie = request.getCookies();
+        for (Cookie c : allCookie) {
+            if ("keepLoggin".equals(c.getName())) {
                 c.setValue("false");
                 response.addCookie(c);
             }
@@ -168,8 +162,24 @@ public class AccountController {
 
     @RequestMapping(value = "FBRedirect", method = RequestMethod.GET)
     public String FBRedirect(String code) {
-        System.out.println(code);
-        return "notyet";
+        FBConnection fBConnection = new FBConnection();
+        try {
+            String accessToken = fBConnection.getAccessToken(code);
+            System.out.println(accessToken);
+            FBGraph fBGraph = new FBGraph();
+            FBProfile prof = fBGraph.getFBProfile(accessToken);
+            System.out.println(prof);
+            Account aFacbook=new Account();
+            aFacbook.setEmail(prof.getEmail());
+            aFacbook.setActivated(prof.isVerified());
+            aFacbook.setFirstName(prof.getFirst_name());
+            aFacbook.setLastName(prof.getLast_name());
+            aFacbook.setGender(prof.getGender());
+            return "redirect:";
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            return "userNotFound";
+        }
     }
 
 }

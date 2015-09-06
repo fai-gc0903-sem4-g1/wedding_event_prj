@@ -23,25 +23,26 @@ import javax.imageio.ImageIO;
 public class FBGraph {
 
     public FBProfile getFBProfile(String accessToken) {
-        String graph = null;
+        String jsonData = null;
         String g = "https://graph.facebook.com/me?" + accessToken;
         try {
             URL url = new URL(g);
             URLConnection connection = url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
-            StringBuffer b = new StringBuffer();
+            StringBuilder b = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
-                b.append(inputLine + "\n");
+                b.append(inputLine).append("\n");
             }
             in.close();
-            graph = b.toString();
+            jsonData = b.toString();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         Gson json = new Gson();
-        return json.fromJson(graph, FBProfile.class);
+        System.out.println(jsonData);
+        return json.fromJson(jsonData, FBProfile.class);
     }
 
     public BufferedImage getFbGraphAvatar(String userId) {
@@ -56,5 +57,8 @@ public class FBGraph {
             e.printStackTrace();
         }
         return null;
+    }
+    public static void main(String[] args) {
+        new FBGraph().getFBProfile("access_token=CAAOZCUTLuboQBAH2hdtT1StALGbZAqsQr8IOCm2ZALrZBZAl2snkZBE0C9apOCYjnFxQHxQmPhksnZBCFCikgu6XSqZBZBru7LdEvIvi11rE029VlRBt27PQOmdmHsdJaoQuqlBn7RZAddzzuQlEw58Cphl4912XLcpntDNKydpYyxZBELEOwjlcWtj81IPb3AAx7gZD&expires=5183608");
     }
 }
