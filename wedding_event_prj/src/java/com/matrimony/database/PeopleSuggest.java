@@ -5,7 +5,7 @@
  */
 package com.matrimony.database;
 
-import com.matrimony.entity.Account;
+import com.matrimony.entity.User;
 import java.util.List;
 
 /**
@@ -13,7 +13,7 @@ import java.util.List;
  * @author SON
  */
 public class PeopleSuggest {
-    public static List<Account> suggestByAge(){
+    public static List<User> suggestByAge(){
         return null;
     }
 }

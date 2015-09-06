@@ -8,8 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../bundle/bootstrap.jsp"/>
 <jsp:include page="../bundle/jstl.jsp"/>
-<jsp:useBean id="accountDAO" class="com.matrimony.database.AccountDAO"/>
-<c:set var="account" value="${sessionScope.account}"/>
+<jsp:useBean id="userDAO" class="com.matrimony.database.UserDAO"/>
+<c:set var="user" value="${sessionScope.user}"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Trang chủ chính thức</h1>
-        <a href="/wedding_event_prj/${account.username}">${account.lastName} ${account.middleName} ${account.firstName}</a>
+        <a href="/wedding_event_prj/${user.username}">${user.name}</a>
         
         <form action="/wedding_event_prj/logout" method="POST">
             <input type="submit" value="Đăng xuất"/>

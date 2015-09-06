@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Đây là trang cá nhân của ${requestScope.account.firstName} ${requestScope.account.lastName}</h1>
+        <h1>Đây là trang cá nhân của ${requestScope.user.name}</h1>
     </body>
 </html>

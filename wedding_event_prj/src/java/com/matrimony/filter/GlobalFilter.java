@@ -5,8 +5,8 @@
  */
 package com.matrimony.filter;
 
-import com.matrimony.database.AccountDAO;
-import com.matrimony.entity.Account;
+import com.matrimony.database.UserDAO;
+import com.matrimony.entity.User;
 import java.io.IOException;
 import java.util.Date;
 import javax.servlet.Filter;
@@ -36,8 +36,8 @@ public class GlobalFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         System.out.println("Global filter");
         System.out.println(new Date().toString() + ": " + request.getRemoteAddr());
-        Account account = (Account) request.getSession().getAttribute("account");
-        if (account == null) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             Cookie[] allCookie = request.getCookies();
             boolean keepLogin = false;
             for (Cookie c : allCookie) {
@@ -54,9 +54,9 @@ public class GlobalFilter implements Filter {
             System.out.println("keep loggin confirm " + keepLogin);
             for (Cookie c : allCookie) {
                 if (keepLogin && "loginName".equals(c.getName())) {
-                    account = AccountDAO.findByLoginName(c.getValue());
-                    System.out.println("cokie the nao roi " + account);
-                    request.getSession().setAttribute("account", account);
+                    user = UserDAO.findByEmailOrContactNumberOrUsername(c.getValue());
+                    System.out.println("cokie the nao roi " + user);
+                    request.getSession().setAttribute("user", user);
                     break;
                 }
             }

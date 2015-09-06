@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
  *
  * @author SON
  */
-public class MailUtil implements Runnable {
+public final class MailUtil extends Thread {
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final String PORT = "587";
@@ -39,6 +39,16 @@ public class MailUtil implements Runnable {
         this.destinationEmail = destinationEmail;
         this.subject = subject;
         this.content = content;
+        ini();
+    }
+
+    public MailUtil() {
+        ini();
+    }
+    
+    
+
+    public void ini() {
         /* =====Create properties===== */
         props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -46,14 +56,7 @@ public class MailUtil implements Runnable {
         props.put("mail.smtp.host", SMTP_SERVER);
         props.put("mail.smtp.port", PORT);
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        
-        /*====SSL configuration====*/
-//        props.put("mail.smtp.auth", "true");
-//        props.put("mail.smtp.socketFactory.port", "465");
-//        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-//        props.put("mail.smtp.host", "smtp.gmail.com");
-//        props.put("mail.smtp.port", "465");
-        /* =====Authentication===== */
+
         auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -61,11 +64,6 @@ public class MailUtil implements Runnable {
             }
         };
         session = Session.getInstance(props, auth);
-
-    }
-
-    public void send() {
-        this.run();
     }
 
     @Override
@@ -84,9 +82,30 @@ public class MailUtil implements Runnable {
         }
     }
 
+    public void SendActiveMail(String dstEmail, String key) {
+        /*=====Tao noi dung email can gui=====*/
+        String sub = "Chao mung den voi matrimony, kich hoat tai khoan";
+        StringBuilder cont = new StringBuilder();
+        cont.append("Day la key active: ");
+        cont.append(key);
+        cont.append("\n");
+        cont.append("Cam on da su dung dich vu cua chung toi!");
+
+        destinationEmail = dstEmail;
+        subject = sub;
+        content = cont.toString();
+        start();
+    }
+    
+    public void send(){
+        start();
+    }
+    
+    
     public static void main(String[] args) {
-        System.out.println("Sending...");
-        MailUtil mailUtil = new MailUtil("sondcgc00681@fpt.edu.vn", "mail test working", "OK it worked");
-        mailUtil.send();
+        MailUtil mailUtil=new MailUtil("sondcgc00681@fpt.edu.vn", "xin chao ban", "xin chao ban lan nua");
+        System.out.println("Starting..");
+        mailUtil.start();
+        System.out.println("Sending..");
     }
 }

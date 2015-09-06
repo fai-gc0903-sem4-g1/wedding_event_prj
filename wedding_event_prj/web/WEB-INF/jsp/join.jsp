@@ -45,11 +45,12 @@
         <a href="${fbConn.FBAuthUrl}">Login with facebook</a>
         <div class="container-fluid col-lg-12" style="color:#ddccee">
             <div class="row">
-                <form:form modelAttribute="accountLogin" id="loginForm" action="/wedding_event_prj/login" method="POST"
+                <form:form modelAttribute="userLogin" id="loginForm" action="/wedding_event_prj/login" method="POST"
                            class="form-horizontal col-md-4">
+                    <h3>${requestScope.notice}</h3>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <input class="form-control" type="text" value="${cookie.loginName.value}" name="username"
+                            <input class="form-control" type="text" value="${empty requestScope.userLogin.username?cookie.loginName.value:requestScope.userLogin.username }" name="username"
                                    placeholder="Email hoặc số điện thoại"></input>
                             <form:errors path="username" cssClass="error"/>
                         </div>
@@ -58,9 +59,9 @@
                     <div class="form-group">
                         <!--<label class="col-sm-4 control-label">Mật khẩu</label>-->
                         <div class="col-sm-offset-2 col-sm-8">
-                            <input class="form-control" type="password" value="${cookie.password.value}" name="passwordHash"
+                            <input class="form-control" type="password" value="${empty requestScope.userLogin.password?cookie.password.value:requestScope.userLogin.password}" name="password"
                                    placeholder="Mật khẩu" />
-                            <form:errors path="passwordHash" cssClass="error"/>
+                            <form:errors path="password" cssClass="error"/>
                         </div>
                     </div>
 
@@ -79,7 +80,7 @@
                         </div>
                     </div>
                 </form:form>
-                <form:form modelAttribute="accountReg" id="registerForm" action="/wedding_event_prj/register" method="POST" class="form-horizontal col-md-4">
+                <form:form modelAttribute="userReg" id="registerForm" action="/wedding_event_prj/register" method="POST" class="form-horizontal col-md-4">
                     <h2>Đăng ký</h2><br/>
                     <div style="display: none;" id="myAlert" class="alert alert-danger" role="alert"></div>
 
@@ -87,7 +88,7 @@
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-3">
                             <input id="firstName" class="form-control" type="text" name="firstName"
-                                   placeholder="Tên"></input>
+                                   placeholder="Tên" value="${requestScope.userReg.firstName}"></input>
                         </div>
                         <div class="col-sm-3">
                             <input id="middleName" class="form-control" type="text" name="middleName"
@@ -95,26 +96,17 @@
                         </div>
                         <div class="col-sm-3">
                             <input id="lastName" class="form-control" type="text" name="lastName"
-                                   placeholder="Họ"></input>
+                                   placeholder="Họ" value="${requestScope.userReg.lastName}"></input>
                         </div>
                         <form:errors path="firstName" cssStyle="error" cssClass="control-label col-sm-offset-2 error"/>
                         <form:errors path="lastName" cssStyle="error" cssClass="control-label col-sm-offset-4 error"/>
                     </div>
-                    <div class="form-group">
-                        <label style="color: red;" class="control-label col-sm-1">(*)</label>
-                        <div class="col-sm-9">
-                            <input id="username" onkeyup="userChecker()" class="form-control" type="text" name="username"
-                                   placeholder="Tên người dùng"></input>
-                            <form:errors path="username" cssClass="error"/>
-                        </div>
-
-                    </div>
 
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-9">
-                            <input id="password" class="form-control" type="password" name="passwordHash" placeholder="Mật khẩu"></input>
-                            <form:errors path="passwordHash" cssClass="error"/>
+                            <input id="password" class="form-control" type="password" name="password" placeholder="Mật khẩu"></input>
+                            <form:errors path="password" cssClass="error"/>
                         </div>
                     </div>   
                     <div class="form-group">
@@ -126,7 +118,7 @@
                                class="form-control-feedback glyphicon glyphicon-ok"></i>
                             <i id="emailAlready" style="display: none; color: red;"
                                class="form-control-feedback glyphicon glyphicon-exclamation-sign"></i>
-                            <input id="email" onkeyup="" class="form-control" type="email" name="email" placeholder="Địa chỉ email"></input>
+                            <input id="email" onkeyup="" class="form-control" type="email" name="email"  value="${userReg.email}" placeholder="Địa chỉ email"></input>
                             <div><form:errors path="email" cssClass="error"/></div>
                         </div>
                     </div>
@@ -134,7 +126,7 @@
                     <div class="form-group">
                         <label style="color: red;" class="control-label col-sm-1">(*)</label>
                         <div class="col-sm-9">
-                            <input id="reEmail" class="form-control" type="email" placeholder="Nhập lại địa chỉ email"></input>
+                            <input id="reEmail" class="form-control" type="email" value="${userReg.email}" placeholder="Nhập lại địa chỉ email"></input>
                         </div>
                     </div>
 
