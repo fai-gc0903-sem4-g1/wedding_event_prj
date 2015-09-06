@@ -40,4 +40,19 @@ public class STException {
             super(msg);
         }
     }
+     public static class EmptySuggest extends Exception {
+        public EmptySuggest(String msg) {
+            super(msg);
+        }
+    }
+     public static class EmptyRequest extends Exception {
+        public EmptyRequest(String msg) {
+            super(msg);
+        }
+    }
+     public static class EmptyFriend extends Exception {
+        public EmptyFriend(String msg) {
+            super(msg);
+        }
+    }
 }
