@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 public class FriendController {
 
-    @RequestMapping(value = "sendRequest/{nameToId}/{nameFromId}", method = RequestMethod.POST)
-    public String sendRequest(@PathVariable String nameToId, @PathVariable String nameFromId, TableFriends table, ModelMap mm, HttpServletRequest request, HttpSession session) throws STException.EmptySuggest, STException.EmptyRequest {
+    @RequestMapping(value = "askFriend", method = RequestMethod.POST)
+    public String sendRequest(String nameToId, String nameFromId, TableFriends table, ModelMap mm, HttpServletRequest request, HttpSession session) throws STException.EmptySuggest, STException.EmptyRequest {
         User friendFromId = FriendDAO.getUserById(nameFromId);
         table.setFriendFromId(nameFromId);
         table.setFriendToId(nameToId);

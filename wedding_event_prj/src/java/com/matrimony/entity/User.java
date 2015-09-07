@@ -49,7 +49,6 @@ public class User implements Serializable {
     private String name;
     private Date birthday;
     private String roleName;
-    @Column(columnDefinition = "default 'null'")
     private String contactNumber;
     private String registrationIP;
     private String activeKey;
