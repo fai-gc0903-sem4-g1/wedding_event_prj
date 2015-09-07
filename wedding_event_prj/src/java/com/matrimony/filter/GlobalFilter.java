@@ -37,6 +37,7 @@ public class GlobalFilter implements Filter {
         System.out.println("Global filter");
         System.out.println(new Date().toString() + ": " + request.getRemoteAddr());
         User user = (User) request.getSession().getAttribute("user");
+        System.out.println(user);
         if (user == null) {
             Cookie[] allCookie = request.getCookies();
             boolean keepLogin = false;

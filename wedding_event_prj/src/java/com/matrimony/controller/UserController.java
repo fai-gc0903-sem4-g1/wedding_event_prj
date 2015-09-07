@@ -101,14 +101,7 @@ public class UserController {
         try {
             userReg.setBirthday(birthday);
             UserDAO.add(userReg);
-            String sub = "Chao mung den voi matrimony, kich hoat tai khoan";
-            StringBuilder cont = new StringBuilder();
-            cont.append("Day la key active: ");
-            cont.append(activeKey);
-            cont.append("\n");
-            cont.append("Cam on da su dung dich vu cua chung toi!");
-            MailUtil mail = new MailUtil(userReg.getEmail(), sub, cont.toString());
-            mail.send();
+            sendMailActive(userReg.getEmail(), activeKey);
             request.getSession().setAttribute("user", UserDAO.findByEmail(userReg.getEmail()));
             return "active";
         } catch (STException.EmailAlready ex) {
@@ -123,13 +116,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "active", method = RequestMethod.POST)
-    public String doActive(HttpServletRequest request, String activeKey
-    ) {
-        User curAccount = (User) request.getSession().getAttribute("account");
+    public String doActive(HttpServletRequest request, String activeKey) {
+        System.out.println(activeKey);
+        User curAccount = (User) request.getSession().getAttribute("user");
+        System.out.println(curAccount.getEmail()+" want to active");
         if (curAccount.getActiveKey().equals(activeKey)) {
             curAccount.setVerified(true);
             curAccount.setVerifiedTime(new Timestamp(System.currentTimeMillis()));
             UserDAO.Update(curAccount);
+            System.out.println(curAccount.getEmail() +" activated");
             return "redirect:";
         } else {
             return "active";
@@ -172,7 +167,7 @@ public class UserController {
             System.out.println("Create user from facebook OK");
             try {
                 UserDAO.add(userFBReg);
-                System.out.println("Added user "+userFBReg.getEmail());
+                System.out.println("Added user " + userFBReg.getEmail());
                 Cookie[] cookies = new Cookie[3];
                 cookies[0] = new Cookie("loginName", userFBReg.getEmail());
                 cookies[1] = new Cookie("password", "");
@@ -220,5 +215,23 @@ public class UserController {
             System.out.println(e);
         }
         return "settings";
+    }
+
+    public void sendMailActive(String email, String key) {
+        String sub = "Chao mung den voi matrimony, kich hoat tai khoan";
+        StringBuilder cont = new StringBuilder();
+        cont.append("Day la key active: ");
+        cont.append(key);
+        cont.append("\n");
+        cont.append("Cam on da su dung dich vu cua chung toi!");
+        MailUtil mail = new MailUtil(email, sub, cont.toString());
+        mail.send();
+    }
+    
+    @RequestMapping(value = "resend", method = RequestMethod.POST)
+    public String resend(HttpSession session){
+        User user=(User) session.getAttribute("user");
+        sendMailActive(user.getEmail(), user.getActiveKey());
+        return "active";
     }
 }

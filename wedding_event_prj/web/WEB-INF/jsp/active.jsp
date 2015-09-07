@@ -13,14 +13,14 @@
     </head>
     <body>
         <h1>Kich hoat tai khoan</h1>
-        <form action="/wedding_event_prj/account/active" method="POST">
+        <form action="/wedding_event_prj/active" method="POST">
             <label>Chúng tôi vừa gửi key active vào mail của bạn, hãy kiếm tra mail kể trong mục spam!!!Nhập key vào đây</label>
-            <input type="text" name="activeKey"/>
+            <input type="text" name="activeKey" placeholder="Nhập key vào đây"/>
             <br/>
             <input type="submit" value="Kích hoạt"/>
-            <input type="button" value="Gửi lại mail cho tôi"/>
         </form>
-        
-        
+        <form action="/wedding_event_prj/resend" method="POST">
+            <input type="submit" value="Gửi lại kích hoạt"/>
+        </form>
     </body>
 </html>
