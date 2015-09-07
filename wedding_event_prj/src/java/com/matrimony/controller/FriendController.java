@@ -6,7 +6,6 @@
 package com.matrimony.controller;
 
 import com.matrimony.database.FriendDAO;
-import com.matrimony.entity.TableFriend;
 import com.matrimony.entity.TableFriends;
 import com.matrimony.entity.User;
 import com.matrimony.exception.STException;
@@ -16,7 +15,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,7 +40,7 @@ public class FriendController {
     }
 
     @RequestMapping(value = "acceptRequest/{nameToId}/{nameFromId}", method = RequestMethod.POST)
-    public String acceptRequest(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriend table) {
+    public String acceptRequest(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriends table) {
         FriendDAO.EditRecord(nameFromId, nameToId, 2);//sua doi thuoc tinh status thanh da dong y ket ban
         User friendFromId = FriendDAO.getUserById(nameFromId);
         FriendController f = new FriendController();
@@ -53,12 +51,12 @@ public class FriendController {
     }
     
     @RequestMapping(value = "cancelRequest/{nameToId}/{nameFromId}", method = RequestMethod.POST)
-    public String cancelRequest(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriend table) {
+    public String cancelRequest(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriends table) {
         return "home";
     }
     
     @RequestMapping(value = "removeFriend/{nameToId}/{nameFromId}", method = RequestMethod.POST)
-    public String removeFriend(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriend table) {
+    public String removeFriend(@PathVariable String nameToId, ModelMap mm, HttpServletRequest request, HttpSession session, @PathVariable String nameFromId, TableFriends table) {
         return "home";
     }
 

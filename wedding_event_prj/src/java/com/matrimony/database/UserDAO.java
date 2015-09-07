@@ -43,7 +43,7 @@ public class UserDAO {
 
     public static List<User> allAccounts() {
         Session ss = HibernateUtil.openSession();
-        List<User> accounts = ss.createQuery("FROM account").list();
+        List<User> accounts = ss.createQuery("FROM user").list();
         ss.close();
         return accounts;
     }
@@ -57,7 +57,7 @@ public class UserDAO {
 
     public static User findById(String id) {
         Session ss = HibernateUtil.openSession();
-        User account = (User) ss.createQuery("from user where accountId=?").setString(0, id).uniqueResult();
+        User account = (User) ss.createQuery("from user where userId=?").setString(0, id).uniqueResult();
         ss.close();
         return account;
     }
@@ -110,7 +110,19 @@ public class UserDAO {
     }
 
     public static void main(String[] args) {
-        User u=findByEmailOrContactNumberOrUsername("son5@a.b");
-        System.out.println(u);
+       User user=new User();
+       user.setPassword("1234");
+       user.setEmail("asdf@yahoo.com");
+       user.setGender("male");
+//        try {
+//            add(user);
+//            System.out.println("Added");
+//        } catch (STException.EmailAlready ex) {
+//            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (STException.ContactNumberAlready ex) {
+       
+//            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+       User aa=findByEmail("taodienmat@yahoo.com");
     }
 }

@@ -31,7 +31,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     @GenericGenerator(name = "id", strategy = "uuid")
     @GeneratedValue(generator = "id")
-    private String accountId;
+    private String userId;
     @Length(min = 4, max = 100)
     private String password;
     private String salt;
@@ -63,6 +63,7 @@ public class User implements Serializable {
     private boolean verified;
 
     private String maritalStatus;
+    private String socialNetwork;
     private int height;
     private int weight;
     private String hometown;
@@ -85,24 +86,15 @@ public class User implements Serializable {
     private String favoriteBook;
     private Timestamp lastUpdateHobby;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
-    private Set<UserFriend> userFriends;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "accountId")
-    private Set<InviteAddFriend> inviteAddFriends;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "senderId")
-    private Set<Friend> friends;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "receiverId")
-    private Set<Friend> receivers;
-
-    public String getAccountId() {
-        return accountId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
+ 
     public String getPassword() {
         return password;
     }
@@ -129,6 +121,14 @@ public class User implements Serializable {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getSocialNetwork() {
+        return socialNetwork;
+    }
+
+    public void setSocialNetwork(String socialNetwork) {
+        this.socialNetwork = socialNetwork;
     }
 
     public void setFirstName(String firstName) {
@@ -405,38 +405,6 @@ public class User implements Serializable {
 
     public void setLastUpdateHobby(Timestamp lastUpdateHobby) {
         this.lastUpdateHobby = lastUpdateHobby;
-    }
-
-    public Set<UserFriend> getUserFriends() {
-        return userFriends;
-    }
-
-    public void setUserFriends(Set<UserFriend> userFriends) {
-        this.userFriends = userFriends;
-    }
-
-    public Set<InviteAddFriend> getInviteAddFriends() {
-        return inviteAddFriends;
-    }
-
-    public void setInviteAddFriends(Set<InviteAddFriend> inviteAddFriends) {
-        this.inviteAddFriends = inviteAddFriends;
-    }
-
-    public Set<Friend> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<Friend> friends) {
-        this.friends = friends;
-    }
-
-    public Set<Friend> getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(Set<Friend> receivers) {
-        this.receivers = receivers;
     }
 
 }

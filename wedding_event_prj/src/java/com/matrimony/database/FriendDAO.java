@@ -69,7 +69,7 @@ public class FriendDAO {
         Session session = HibernateUtil.openSession();
         Query query = session.createQuery("FROM friend WHERE status=:status and friendFromId=:friendFromId");
         query.setParameter("status", 1);
-        query.setParameter("friendFromId", user.getAccountId());
+        query.setParameter("friendFromId", user.getUserId());
         list = query.list();
         if (list != null) {
             listSuggest = FriendDAO.getListFriend(list);//lay lai danh sach nhung loi goi y
@@ -86,7 +86,7 @@ public class FriendDAO {
         Session session = HibernateUtil.openSession();
         Query query = session.createQuery("FROM friend WHERE status=:status and friendFromId=:friendFromId");
         query.setParameter("status", 2);
-        query.setParameter("friendFromId", user.getAccountId());
+        query.setParameter("friendFromId", user.getUserId());
         list = query.list();
         if (list != null) {
             listFriend = FriendDAO.getListFriend(list);//lay lai danh sach nhung loi goi y
@@ -104,7 +104,7 @@ public class FriendDAO {
         Session session = HibernateUtil.openSession();
         Query query = session.createQuery("FROM friend WHERE status=:status and friendToId=:friendToId");
         query.setParameter("status", 2);
-        query.setParameter("friendToId", user.getAccountId());
+        query.setParameter("friendToId", user.getUserId());
         list = query.list();
         if (list != null) {
             listRequest = FriendDAO.getListFriend(list);

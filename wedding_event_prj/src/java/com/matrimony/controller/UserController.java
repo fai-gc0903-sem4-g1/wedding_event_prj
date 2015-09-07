@@ -150,33 +150,46 @@ public class UserController {
         return "redirect:";
     }
 
-    @RequestMapping(value = "loginWithFacebook", method = RequestMethod.GET)
-    public String loginWithFacebook(HttpServletRequest request, String code
-    ) {
-        FBConnection fb = new FBConnection();
-        System.out.println(code);
-        FBGraph fbGraph = new FBGraph();
-        FBProfile profile = fbGraph.getFBProfile(code);
-        return null;
-    }
-
     @RequestMapping(value = "FBRedirect", method = RequestMethod.GET)
-    public String FBRedirect(String code
-    ) {
+    public String FBRedirect(String code, HttpSession session, HttpServletResponse response) {
         FBConnection fBConnection = new FBConnection();
         try {
             String accessToken = fBConnection.getAccessToken(code);
             System.out.println(accessToken);
             FBGraph fBGraph = new FBGraph();
-            FBProfile prof = fBGraph.getFBProfile(accessToken);
-            System.out.println(prof);
-            User aFacbook = new User();
-            aFacbook.setEmail(prof.getEmail());
-            aFacbook.setVerified(prof.isVerified());
-            aFacbook.setFirstName(prof.getFirst_name());
-            aFacbook.setLastName(prof.getLast_name());
-            aFacbook.setGender(prof.getGender());
-            return "redirect:";
+            FBProfile fbProfile = fBGraph.getFBProfile(accessToken);
+            System.out.println(fbProfile);
+            User userFBReg = new User();
+            userFBReg.setEmail(fbProfile.getEmail());
+            userFBReg.setVerified(fbProfile.isVerified());
+            userFBReg.setFirstName(fbProfile.getFirst_name());
+            userFBReg.setLastName(fbProfile.getLast_name());
+            userFBReg.setGender(fbProfile.getGender());
+            userFBReg.setLocale(fbProfile.getLocale());
+            userFBReg.setRegMethod("Facebook");
+            userFBReg.setSocialNetwork(fbProfile.getLink());
+            userFBReg.setContactNumber("");
+            System.out.println("Create user from facebook OK");
+            try {
+                UserDAO.add(userFBReg);
+                System.out.println("Added user "+userFBReg.getEmail());
+                Cookie[] cookies = new Cookie[3];
+                cookies[0] = new Cookie("loginName", userFBReg.getEmail());
+                cookies[1] = new Cookie("password", "");
+                cookies[2] = new Cookie("keepLoggin", "true");
+                for (Cookie c : cookies) {
+                    c.setMaxAge(60 * 60 * 24 * 365);
+                    response.addCookie(c);
+                }
+                System.out.println("saved cookie");
+                session.setAttribute("user", UserDAO.findByEmail(userFBReg.getEmail()));
+                return "redirect:";
+            } catch (STException.EmailAlready ex) {
+                System.out.println("Hinh nhu ban do co tai khoan roi");
+            } catch (STException.ContactNumberAlready ex) {
+                System.out.println("Hinh nhu ban da co so dien thoai");
+            }
+            return "failed";
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
             return "userNotFound";
@@ -192,7 +205,7 @@ public class UserController {
             return "userNotFound";
         } else {
             model.addAttribute("account", account);
-            return "profile";
+            return "fbProfileile";
         }
     }
 
